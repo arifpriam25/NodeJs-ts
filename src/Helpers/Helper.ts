@@ -7,7 +7,7 @@ interface UserData {
     email: string | null,
     roleId: string | null,
     verified: boolean | null,
-    ative: boolean | null
+    active: boolean | null
 
 }
 
@@ -33,7 +33,7 @@ const ResponseData = (status: number, message: string | null, error: any | null,
 }
 
 const GenerateToken = (data: any): string => {
-    const token = jwt.sign(data, process.env.JWT_TOKEN as string, { expiresIn: "10m" });
+    const token = jwt.sign(data, process.env.JWT_TOKEN as string, { expiresIn: "30s" });
     return token;
 }
 

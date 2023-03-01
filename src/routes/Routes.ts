@@ -7,7 +7,7 @@ import UserValidation from "../middleware/validation/UserValidation";
 const router = express.Router();
 
 router.get("/role",Authorization.Authenticated,RoleController.GetRole);
-router.post("/role",RoleController.CreateRole);
+// router.post("/role",RoleController.CreateRole);
 router.post("/role/:id",RoleController.UpdateRole);
 router.delete("/role/:id",RoleController.DeleteRole);
 router.get("/role/:id",RoleController.GetRoleById);
@@ -15,5 +15,6 @@ router.get("/role/:id",RoleController.GetRoleById);
 //Users Routing
 router.post("/user/signup",UserValidation.RegisterValidation, UserController.Register);
 router.post("/user/login",UserController.UserLogin)
+router.get("/user/refresh-token",UserController.RefreshToken)
 
 export default router;
