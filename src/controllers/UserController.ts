@@ -8,7 +8,7 @@ import PasswordHelper from "../Helpers/PasswordHelper";
 
 const Register = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const { name, email, password, confirmPassword } = req.body;
+        const { name, email, password, confirmPassword, roleId } = req.body;
 
         const hashed = await PasswordHelper.PasswordHashing(password);
 
@@ -16,9 +16,9 @@ const Register = async (req: Request, res: Response): Promise<Response> => {
             name,
             email,
             password: hashed,
+            roleId: roleId,
             active: true,
             verified: true,
-            roleId: 1
         })
 
         return res.status(201).send(Helper.ResponseData(201, "Created", null, user));
@@ -80,7 +80,7 @@ const RefreshToken = async (req: Request, res: Response): Promise<Response> => {
         const refreshToken = req.cookies.refreshToken;
         // console.log(refreshToken);
         if (!refreshToken) {
-            
+
             return res.status(401).send(Helper.ResponseData(401, "Error reftoken", null, null));
         }
         const decodedUser = Helper.ExtractRefreshToken(refreshToken);
@@ -95,7 +95,7 @@ const RefreshToken = async (req: Request, res: Response): Promise<Response> => {
             verified: decodedUser.verified,
             active: decodedUser.active,
         });
-        
+
         const resultUser = {
             name: decodedUser.name,
             email: decodedUser.email,
@@ -111,51 +111,51 @@ const RefreshToken = async (req: Request, res: Response): Promise<Response> => {
     }
 }
 
-const UserDetail = async(req:Request,res:Response):Promise<Response>=>{
+const UserDetail = async (req: Request, res: Response): Promise<Response> => {
     try {
         const email = res.locals.userEmail;
         const user = await User.findOne({
-            where:{
-                email:email
+            where: {
+                email: email
             },
-            include:{
-                model:Role,
-                attributes:["id","roleName"]
+            include: {
+                model: Role,
+                attributes: ["id", "roleName"]
             }
         });
 
-        if(!user){
-            return res.status(404).send(Helper.ResponseData(404,"User Not FOUND",null,null))
+        if (!user) {
+            return res.status(404).send(Helper.ResponseData(404, "User Not FOUND", null, null))
         }
-        user.password="";
-        user.accessToken="";
-        return res.status(200).send(Helper.ResponseData(200,"Current User",null,user))
+        user.password = "";
+        user.accessToken = "";
+        return res.status(200).send(Helper.ResponseData(200, "Current User", null, user))
     } catch (error) {
         return res.status(500).send(Helper.ResponseData(500, "reftoken", error, null));
     }
 }
-const UserLogout = async(req:Request,res:Response):Promise<Response> => {
+const UserLogout = async (req: Request, res: Response): Promise<Response> => {
     try {
         const refreshToken = req.cookies.refreshToken
-        if(!refreshToken){
+        if (!refreshToken) {
             return res.status(200).send(Helper.ResponseData(200, "E:2 reftoken : Logout", null, null));
         }
         const email = res.locals.userEmail;
         const user = await User.findOne({
-            where:{
-                email:email
+            where: {
+                email: email
             }
         });
-        if(!user){
+        if (!user) {
             res.clearCookie("refreshToken");
-            return res.status(404).send(Helper.ResponseData(404,"User Not FOUND",null,null))
+            return res.status(404).send(Helper.ResponseData(404, "User Not FOUND", null, null))
         }
         res.clearCookie("refreshToken");
-        await user.update({accessToken:null},{where:{email}})
+        await user.update({ accessToken: null }, { where: { email } })
         return res.status(200).send(Helper.ResponseData(200, "Success Logout", null, null));
     } catch (error) {
         return res.status(500).send(Helper.ResponseData(500, "E:1 logout", error, null));
     }
-    
+
 }
-export default { Register, UserLogin, RefreshToken,UserDetail,UserLogout };
+export default { Register, UserLogin, RefreshToken, UserDetail, UserLogout };

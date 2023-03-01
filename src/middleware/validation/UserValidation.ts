@@ -4,19 +4,21 @@ import Helpers from "../../Helpers/Helper";
 import User from "../../db/models/User";
 
 const RegisterValidation = async (req: Request, res: Response, next: NextFunction) => {
-    const { name, email, password, confirmPassword } = req.body;
+    const { name, email, password, confirmPassword,roleId } = req.body;
     try {
         const data = {
             name,
             email,
             password,
-            confirmPassword
+            confirmPassword,
+            roleId
         }
         const rules: Validator.Rules = {
             "name": "required|string|max:50",
             "email": "required|email",
             "password": "required|min:8",
-            "confirmPassword": "required|same:password"
+            "confirmPassword": "required|same:password",
+            "roleId": "required|integer|min:1|max:3"
         }
 
         const validate = new Validator(data, rules);
