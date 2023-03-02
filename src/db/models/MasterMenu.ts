@@ -31,7 +31,7 @@ MasterMenu.init({
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.BIGINT
+    type: DataTypes.INTEGER
   },
   name: {
     allowNull: true,

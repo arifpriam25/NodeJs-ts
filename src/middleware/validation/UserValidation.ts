@@ -18,7 +18,7 @@ const RegisterValidation = async (req: Request, res: Response, next: NextFunctio
             "email": "required|email",
             "password": "required|min:8",
             "confirmPassword": "required|same:password",
-            "roleId": "required|integer|min:1|max:3"
+            "roleId": "required|integer"
         }
 
         const validate = new Validator(data, rules);

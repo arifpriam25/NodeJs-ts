@@ -7,13 +7,13 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.BIGINT
+        type: Sequelize.INTEGER
       },
       name: {
         type: Sequelize.STRING
       },
       masterMenuId: {
-        type: Sequelize.BIGINT
+        type: Sequelize.INTEGER
       },
       url: {
         type: Sequelize.TEXT

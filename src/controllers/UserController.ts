@@ -36,12 +36,12 @@ const UserLogin = async (req: Request, res: Response): Promise<Response> => {
             }
         })
         if (!user) {
-            return res.status(401).send(Helper.ResponseData(401, "Unauthorize", null, null))
+            return res.status(401).send(Helper.ResponseData(401, "user not foudn", null, null))
         }
 
         const matched = await PasswordHelper.passwordCompare(password, user.password);
         if (!matched) {
-            return res.status(401).send(Helper.ResponseData(401, "Unauthorize", null, null))
+            return res.status(401).send(Helper.ResponseData(401, "Not Match", null, null))
         }
         const dataUser = {
             name: user.name,

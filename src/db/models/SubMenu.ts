@@ -39,7 +39,7 @@ MasterMenu.init({
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.BIGINT
+    type: DataTypes.INTEGER
   },
   name: {
     allowNull: true,
@@ -47,7 +47,7 @@ MasterMenu.init({
   },
   masterMenuId: {
     allowNull: true,
-    type: DataTypes.BIGINT
+    type: DataTypes.INTEGER
   },
   url: {
     allowNull: true,

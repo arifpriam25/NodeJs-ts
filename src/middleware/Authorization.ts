@@ -38,6 +38,7 @@ const SuperAdminRole = (req: Request, res: Response, next: NextFunction) => {
 const AdminRole = (req: Request, res: Response, next: NextFunction) => {
     try {
         const roleId = res.locals.roleId
+        console.log(roleId)
         if(roleId !== 2){
             return res.status(401).send(Helper.ResponseData(401, "Forbidden bukan role admin", null, null))
         }

@@ -7,7 +7,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.BIGINT
+        type: Sequelize.INTEGER
       },
       name: {
         type: Sequelize.STRING
@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       roleId: {
-        type: Sequelize.BIGINT
+        type: Sequelize.INTEGER
       },
       password: {
         type: Sequelize.TEXT
