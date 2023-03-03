@@ -9,7 +9,7 @@ import UserValidation from "../middleware/validation/UserValidation";
 const router = express.Router();
 
 //Role
-router.get("/role",Authorization.Authenticated,RoleController.GetRole);
+router.get("/role",RoleController.GetRole);
 router.get("/role/:id",Authorization.Authenticated,RoleController.GetRoleById);
 router.post("/role",Authorization.Authenticated,Authorization.AdminRole,RoleController.CreateRole);
 router.post("/role/:id",Authorization.Authenticated,Authorization.AdminRole,RoleController.UpdateRole);

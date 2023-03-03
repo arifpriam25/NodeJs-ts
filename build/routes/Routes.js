@@ -11,7 +11,7 @@ const Authorization_1 = __importDefault(require("../middleware/Authorization"));
 const UserValidation_1 = __importDefault(require("../middleware/validation/UserValidation"));
 const router = express_1.default.Router();
 //Role
-router.get("/role", Authorization_1.default.Authenticated, RoleController_1.default.GetRole);
+router.get("/role", RoleController_1.default.GetRole);
 router.get("/role/:id", Authorization_1.default.Authenticated, RoleController_1.default.GetRoleById);
 router.post("/role", Authorization_1.default.Authenticated, Authorization_1.default.AdminRole, RoleController_1.default.CreateRole);
 router.post("/role/:id", Authorization_1.default.Authenticated, Authorization_1.default.AdminRole, RoleController_1.default.UpdateRole);

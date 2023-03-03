@@ -10,7 +10,7 @@ app.use(cookieParser());
 
 app.get("/",(req:Request,res:Response)=>{
     return res.status(200).send({
-        response:"worknormally "
+        response:"Program work!"
     })
 })
 
