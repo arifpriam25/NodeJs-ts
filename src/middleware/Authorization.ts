@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import Helper from "../Helpers/Helper"
+import Helper from "../helpers/Helper"
 
 const Authenticated = (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -23,23 +23,11 @@ const Authenticated = (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-const SuperAdminRole = (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const roleId = res.locals.roleId
-        if(roleId !== 1){
-            return res.status(401).send(Helper.ResponseData(401, "Forbidden bukan role superadmin", null, null))
-        }
-        next();
-    } catch (error:any) {
-        return res.status(500).send(Helper.ResponseData(50, "", error, null));
-    }
-}
-
 const AdminRole = (req: Request, res: Response, next: NextFunction) => {
     try {
         const roleId = res.locals.roleId
         console.log(roleId)
-        if(roleId !== 2){
+        if(roleId !== 1){
             return res.status(401).send(Helper.ResponseData(401, "Forbidden bukan role admin", null, null))
         }
         next();
@@ -51,7 +39,7 @@ const AdminRole = (req: Request, res: Response, next: NextFunction) => {
 const UserRole = (req: Request, res: Response, next: NextFunction) => {
     try {
         const roleId = res.locals.roleId
-        if(roleId !== 3){
+        if(roleId !== 2){
             return res.status(401).send(Helper.ResponseData(401, "Forbidden bukan role user", null, null))
         }
         next();
@@ -60,4 +48,4 @@ const UserRole = (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-export default { Authenticated,SuperAdminRole,AdminRole,UserRole };
+export default { Authenticated,AdminRole,UserRole };

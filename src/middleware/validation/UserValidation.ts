@@ -1,6 +1,6 @@
 import Validator from "validatorjs";
 import { Request, Response, NextFunction } from "express";
-import Helpers from "../../Helpers/Helper";
+import Helpers from "../../helpers/Helper";
 import User from "../../db/models/User";
 
 const RegisterValidation = async (req: Request, res: Response, next: NextFunction) => {
@@ -20,9 +20,7 @@ const RegisterValidation = async (req: Request, res: Response, next: NextFunctio
             "confirmPassword": "required|same:password",
             "roleId": "required|integer"
         }
-
         const validate = new Validator(data, rules);
-
         if (validate.fails()) {
             return res.status(400).send(Helpers.ResponseData(400, "Bad Request", validate.errors, null))
         }
@@ -31,16 +29,6 @@ const RegisterValidation = async (req: Request, res: Response, next: NextFunctio
                 email: data.email
             }
         })
-        if (user) {
-            const errorData = {
-                errors:{
-                    email:[
-                        "Email already Used!"
-                    ] 
-                }
-            }
-            return res.status(400).send(Helpers.ResponseData(400, "BadRequest", errorData, null))
-        }
         next();
     } catch (error: any) {
         return res.status(500).send(Helpers.ResponseData(500, "", error, null))

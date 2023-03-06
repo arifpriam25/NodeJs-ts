@@ -2,36 +2,27 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Submenus', {
+    await queryInterface.createTable('Orders', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING
-      },
-      masterMenuId: {
+      idUser: {
         type: Sequelize.INTEGER
       },
-      url: {
-        type: Sequelize.TEXT
-      },
-      title: {
-        type: Sequelize.STRING
-      },
-      icon: {
-        type: Sequelize.TEXT
-      },
-      ordering: {
+      idBook: {
         type: Sequelize.INTEGER
       },
-      isTragetSelf: {
-        type: Sequelize.BOOLEAN
+      quantity: {
+        type: Sequelize.INTEGER
       },
-      active: {
-        type: Sequelize.BOOLEAN
+      totalPrice: {
+        type: Sequelize.FLOAT
+      },
+      buyDate: {
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
@@ -44,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Submenus');
+    await queryInterface.dropTable('Orders');
   }
 };

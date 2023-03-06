@@ -2,20 +2,29 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('MasterMenus', {
+    await queryInterface.createTable('Books', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      title: {
         type: Sequelize.STRING
       },
-      icon: {
-        type: Sequelize.TEXT
+      author: {
+        type: Sequelize.STRING
       },
-      ordering: {
+      publisher: {
+        type: Sequelize.STRING
+      },
+      year: {
+        type: Sequelize.INTEGER
+      },
+      price: {
+        type: Sequelize.FLOAT
+      },
+      quantity: {
         type: Sequelize.INTEGER
       },
       active: {
@@ -32,6 +41,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('MasterMenus');
+    await queryInterface.dropTable('Books');
   }
 };
