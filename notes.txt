@@ -1,7 +1,0 @@
-1 npx sequelize-cli db:migrate
-
-up ke docker
-docker compose -f docker-compose.dev.yml up
-
-rebuild development
-docker compose -f docker-compose.dev.yml up --Build
