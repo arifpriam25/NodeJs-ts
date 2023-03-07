@@ -11,6 +11,7 @@ class RepositoryRole {
                 active: true
             }
         });
+        console.log(data)
         return data
     }
     public static Create = async (roleName: string, active: boolean) => {
@@ -18,7 +19,7 @@ class RepositoryRole {
             roleName,
             active
         });
-
+        
         return data
     }
     public static Update = async (id: string, roleName: string, active: boolean) => {

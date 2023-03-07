@@ -32,13 +32,13 @@ const UserDetail = async (req: Request, res: Response): Promise<Response> => {
         });
 
         if (!user) {
-            return res.status(404).send(Helper.ResponseData(404, "User Not FOUND", null, null))
+            return res.status(404).send(Helper.ResponseData("User Not FOUND", null, null))
         }
         user.password = "";
         user.accessToken = "";
-        return res.status(200).send(Helper.ResponseData(200, "Current User", null, user))
+        return res.status(200).send(Helper.ResponseData("Current User", null, user))
     } catch (error) {
-        return res.status(500).send(Helper.ResponseData(500, "reftoken", error, null));
+        return res.status(500).send(Helper.ResponseData("reftoken", error, null));
     }
 }
 
@@ -58,12 +58,12 @@ const UserLogin = async (req: Request, res: Response): Promise<Response> => {
             }
         })
         if (!user) {
-            return res.status(401).send(Helper.ResponseData(401, "user not foudn", null, null))
+            return res.status(401).send(Helper.ResponseData("user not found", null, null))
         }
 
         const matched = await PasswordHelper.passwordCompare(password, user.password);
         if (!matched) {
-            return res.status(401).send(Helper.ResponseData(401, "Not Match", null, null))
+            return res.status(401).send(Helper.ResponseData("Not Match", null, null))
         }
         const dataUser = {
             name: user.name,
@@ -91,9 +91,9 @@ const UserLogin = async (req: Request, res: Response): Promise<Response> => {
             active: user.active,
             token: token
         }
-        return res.status(200).send(Helper.ResponseData(200, "data match", null, responseUser))
+        return res.status(200).send(Helper.ResponseData("data match", null, responseUser))
     } catch (error) {
-        return res.status(500).send(Helper.ResponseData(500, "", error, null));
+        return res.status(500).send(Helper.ResponseData("", error, null));
     }
 }
 
@@ -102,7 +102,7 @@ const UserLogout = async (req: Request, res: Response): Promise<Response> => {
     try {
         const refreshToken = req.cookies.refreshToken
         if (!refreshToken) {
-            return res.status(200).send(Helper.ResponseData(200, "E:2 reftoken : Logout", null, null));
+            return res.status(200).send(Helper.ResponseData("E:2 reftoken : Logout", null, null));
         }
         const email = res.locals.userEmail;
         const user = await User.findOne({
@@ -112,13 +112,13 @@ const UserLogout = async (req: Request, res: Response): Promise<Response> => {
         });
         if (!user) {
             res.clearCookie("refreshToken");
-            return res.status(404).send(Helper.ResponseData(404, "User Not FOUND", null, null))
+            return res.status(404).send(Helper.ResponseData("User Not FOUND", null, null))
         }
         res.clearCookie("refreshToken");
         await user.update({ accessToken: null }, { where: { email } })
-        return res.status(200).send(Helper.ResponseData(200, "Success Logout", null, null));
+        return res.status(200).send(Helper.ResponseData("Success Logout", null, null));
     } catch (error) {
-        return res.status(500).send(Helper.ResponseData(500, "E:1 logout", error, null));
+        return res.status(500).send(Helper.ResponseData("E:1 logout", error, null));
     }
 }
 export default { Register, UserLogin, RefreshToken, UserDetail, UserLogout };

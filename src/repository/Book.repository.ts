@@ -11,14 +11,15 @@ class RepositoryBook {
                 active: true
             }
         });
+        // console.log(data)
         return data
     }
-    public static insert = async (data:any) => {
+    public static Insert = async (data: any) => {
         const insert = await mBook.create(data);
 
         return insert
     }
-    public static Update = async (id: string,data:any) => {
+    public static Update = async (id: string, data: any) => {
         const update = await mBook.update(data, {
             where: {
                 id: id

@@ -24,6 +24,9 @@ module.exports = {
       accessToken: {
         type: Sequelize.TEXT
       },
+      balance: {
+        type: Sequelize.FLOAT
+      },
       verified: {
         type: Sequelize.BOOLEAN
       },

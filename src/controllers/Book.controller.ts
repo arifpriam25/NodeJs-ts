@@ -6,7 +6,32 @@ class ControllerRole {
         const service: sBook = new sBook(req);
         const data = await service.insert();
     
-        return res.send({message: "OK",data: data})
+        return res.send(data)
+    }
+
+    getAll = async (req: Request, res: Response): Promise<Response> => {
+        const service: sBook = new sBook(req);
+        const data = await service.getAll();
+    
+        return res.send(data)
+    }
+    getById = async (req: Request, res: Response): Promise<Response> => {
+        const service: sBook = new sBook(req);
+        const data = await service.getById();
+    
+        return res.send(data)
+    }
+    update = async (req: Request, res: Response): Promise<Response> => {
+        const service: sBook = new sBook(req);
+        const data = await service.update();
+    
+        return res.send(data)
+    }
+    delete = async (req: Request, res: Response): Promise<Response> => {
+        const service: sBook = new sBook(req);
+        const data = await service.delete();
+    
+        return res.send(data)
     }
 }
 

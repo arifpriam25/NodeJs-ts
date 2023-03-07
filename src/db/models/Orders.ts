@@ -1,7 +1,9 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import connection from "../../config/dbConnect";
+import Books from "./Books"
+import User from "./User";
 
-interface BooksAttributes {
+interface OrdersAttributes {
   id?: number,
   idUser?: number,
   idBook?: number,
@@ -14,10 +16,10 @@ interface BooksAttributes {
 }
 
 
-export interface BooksInput extends Optional<BooksAttributes, 'id'> { }
-export interface BooksOutput extends Required<BooksAttributes> { }
+export interface OrdersInput extends Optional<OrdersAttributes, 'id'> { }
+export interface OrdersOutput extends Required<OrdersAttributes> { }
 
-class Books extends Model<BooksAttributes, BooksInput> implements BooksAttributes {
+class Orders extends Model<OrdersAttributes, OrdersInput> implements OrdersAttributes {
   id!: number;
   idUser!: number;
   idBook!: number;
@@ -28,7 +30,7 @@ class Books extends Model<BooksAttributes, BooksInput> implements BooksAttribute
   public readonly updateAt!: Date;
 }
 
-Books.init({
+Orders.init({
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -60,5 +62,6 @@ Books.init({
   sequelize: connection,
   underscored: false
 });
-
-export default Books;
+Orders.belongsTo(Books, { foreignKey: "idBook" });
+Orders.belongsTo(User, { foreignKey: "idUser" });
+export default Orders;

@@ -26,11 +26,11 @@ class ValidationBook {
             }
             const validate = new Validator(data, rules);
             if (validate.fails()) {
-                return res.status(400).send(Helpers.ResponseData(400, "Bad Request", validate.errors, null))
+                return res.status(400).send(Helpers.ResponseData("Bad Request", validate.errors, null))
             }
             next();
         } catch (error: any) {
-            return res.status(500).send(Helpers.ResponseData(500, "", error, null))
+            return res.status(500).send(Helpers.ResponseData("", error, null))
         }
     
     }

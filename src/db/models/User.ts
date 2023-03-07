@@ -10,6 +10,7 @@ interface UserAttributes {
     roleId?: number | null,
     password?: string | null,
     accessToken?: string | null,
+    balance?: number | null,
     verified?: boolean | null,
     active?: boolean | null,
 
@@ -28,6 +29,7 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
     public roleId!: number;
     public password!: string;
     public accessToken!: string;
+    public balance!: number;
     public verified!: boolean;
     public active!: boolean;
 
@@ -60,6 +62,10 @@ User.init({
     },
     accessToken: {
         type: DataTypes.TEXT,
+        allowNull: true
+    },
+    balance: {
+        type: DataTypes.FLOAT,
         allowNull: true
     },
     verified: {
