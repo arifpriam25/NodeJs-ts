@@ -1,10 +1,16 @@
 import mBook from "../db/models/Books";
 
 class RepositoryBook {
-    public static GetById = async (id: string) => {
-        const data = await mBook.findByPk(id);
-        return data
+    public static findById = async (idBook: string)=> {
+        const find = await mBook.findOne({
+            where: {
+                id: idBook
+            }
+        })
+        // console.log(find)
+        return find
     }
+    
     public static GetAll = async () => {
         const data = await mBook.findAll({
             where: {

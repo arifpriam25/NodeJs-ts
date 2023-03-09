@@ -10,11 +10,14 @@ const Authenticated = (req: Request, res: Response, next: NextFunction) => {
             return res.status(401).send(Helper.ResponseData("Unauthorized: Auth.001", null, null))
         }
         const result = Helper.ExtractToken(token!);
-        console.log(result)
+        // console.log(result)
         if (!result) {
             // console.log(token)
             return res.status(401).send(Helper.ResponseData("Unauthorized Auth.002", null, null))
         }
+        // console.log(result)
+        // return res.status(401).send(Helper.ResponseData("Unauthorized Auth.002", null, result))
+        res.locals.userId = result.id
         res.locals.userEmail = result.email
         res.locals.roleId = result.roleId
         next();

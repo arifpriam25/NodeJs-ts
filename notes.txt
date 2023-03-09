@@ -5,3 +5,9 @@ docker compose -f docker-compose.dev.yml up
 
 rebuild development
 docker compose -f docker-compose.dev.yml up --Build
+
+
+eslint
+npm i eslint
+npm i @typescript-eslint/parser
+npm i @typescript-eslint/eslint-plugin

@@ -1,17 +1,15 @@
-import { Request } from "express"
 import rBook from "../repository/Book.repository"
 import Helper from "../helpers/Helper"
 
 class ServiceBook {
-    body: Request['body']
-    params: Request['params']
-    constructor(req: Request) {
-        this.body = req.body
-        this.params = req.params
-    }
-    insert = async () => {
+    // body: Request['body']
+    // params: Request['params']
+    // constructor(req: Request) {
+    //     this.body = req.body
+    //     this.params = req.params
+    // }
+    insert = async ( title:string, author:string, publisher:string, year:number, price:number, quantity:number, active:boolean ) => {
         try {
-            const { title, author, publisher, year, price, quantity, active } = this.body
             const data = {
                 title,
                 author,
@@ -40,10 +38,9 @@ class ServiceBook {
             return  Helper.ResponseData("Error", null, error)
         }
     }
-    getById =async () => {
+    getById =async (id:string) => {
         try {
-            const {id} = this.params
-            const data = await rBook.GetById(id)
+            const data = await rBook.findById(id)
 
             return  Helper.ResponseData("book : "+id, null, data)
 
@@ -51,10 +48,8 @@ class ServiceBook {
             return  Helper.ResponseData("Error", null, error)
         }
     }
-    update =async () => {
+    update =async (id:string, title:string, author:string, publisher:string, year:number, price:number, quantity:number, active:boolean ) => {
         try {
-            const {id} = this.params
-            const { title, author, publisher, year, price, quantity, active } = this.body
             const data = {
                 title,
                 author,
@@ -64,7 +59,7 @@ class ServiceBook {
                 quantity,
                 active
             }
-            const check = await rBook.GetById(id)
+            const check = await rBook.findById(id)
             if(!check){
                 return  Helper.ResponseData("Error id not found", null, check)
             }
@@ -76,10 +71,9 @@ class ServiceBook {
             return  Helper.ResponseData("Error", null, error)
         }
     }
-    delete = async()=>{
+    delete = async(id:string)=>{
         try {
-            const {id}= this.params
-            const check = await rBook.GetById(id)
+            const check = await rBook.findById(id)
             if(!check){
                 return  Helper.ResponseData("Error id not found", null, check)
             }
@@ -88,9 +82,8 @@ class ServiceBook {
         } catch (error) {
             return  Helper.ResponseData("Error", null, error)
         }
-        
-
     }
 }
 
-export default ServiceBook
+// export default ServiceBook
+export default new ServiceBook()

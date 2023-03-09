@@ -1,12 +1,6 @@
 import { Request } from "express";
 import rRole from "../repository/Role.repository";
 
-interface RoleData {
-    id: number | null,
-    roleName: string | null,
-    active: boolean | null
-}
-
 class ServiceRole {
     body: Request['body'];
     params: Request['params']
