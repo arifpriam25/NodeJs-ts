@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 
-const PasswordHashing = async(password:string):Promise<string>=>{
+const passwordHashing = async(password:string):Promise<string>=>{
     const result = await bcrypt.hash(password,10);
     return result;
 };
@@ -10,4 +10,4 @@ const passwordCompare = async(password:string,passwordHash:string):Promise<boole
 
     return matched;
 }
-export default {PasswordHashing,passwordCompare}
+export default {passwordHashing,passwordCompare}

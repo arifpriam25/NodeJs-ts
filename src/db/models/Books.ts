@@ -2,22 +2,22 @@ import { DataTypes, Model, Optional } from "sequelize";
 import connection from "../../config/dbConnect";
 
 interface BooksAttributes {
-  id?: number,
-  title?: string | null,
-  author?: string | null,
-  publisher?: string | null,
-  year?: number | null,
-  price?: number | null,
-  quantity?: number | null,
-  active?: boolean | null,
+  id?: number;
+  title?: string | null;
+  author?: string | null;
+  publisher?: string | null;
+  year?: number | null;
+  price?: number | null;
+  quantity?: number | null;
+  active?: boolean | null;
 
-  createAt?: Date,
-  updateAt?: Date
+  createAt?: Date;
+  updateAt?: Date;
 }
 
 
-export interface BooksInput extends Optional<BooksAttributes, 'id'> { }
-export interface BooksOutput extends Required<BooksAttributes> { }
+export type BooksInput = Optional<BooksAttributes, 'id'>
+export type BooksOutput = Required<BooksAttributes>
 
 class Books extends Model<BooksAttributes, BooksInput> implements BooksAttributes {
   id!: number;
@@ -28,8 +28,8 @@ class Books extends Model<BooksAttributes, BooksInput> implements BooksAttribute
   price!: number;
   quantity!: number;
   active!: boolean;
-  public readonly createAt!: Date;
-  public readonly updateAt!: Date;
+  public readonly createAt!: Date
+  public readonly updateAt!: Date
 }
 
 Books.init({
@@ -40,31 +40,31 @@ Books.init({
     type: DataTypes.INTEGER
   },
   title: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.STRING
   },
   author: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.STRING
   },
   publisher: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.STRING
   },
   year: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.INTEGER
   },
   price: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.FLOAT
   },
   quantity: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.INTEGER
   },
   active: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.BOOLEAN
   }
 }, {
@@ -73,4 +73,4 @@ Books.init({
   underscored: false
 });
 
-export default Books;
+export default Books

@@ -4,20 +4,20 @@ import Books from "./Books"
 import User from "./User";
 
 interface OrdersAttributes {
-  id?: number,
-  idUser?: number,
-  idBook?: number,
-  quantity?: number,
-  totalPrice?: number,
-  buyDate?: Date,
+  id?: number;
+  idUser?: number;
+  idBook?: number;
+  quantity?: number;
+  totalPrice?: number;
+  buyDate?: Date;
 
-  createAt?: Date,
-  updateAt?: Date
+  createAt?: Date;
+  updateAt?: Date;
 }
 
 
-export interface OrdersInput extends Optional<OrdersAttributes, 'id'> { }
-export interface OrdersOutput extends Required<OrdersAttributes> { }
+export type OrdersInput = Optional<OrdersAttributes, 'id'>
+export type OrdersOutput = Required<OrdersAttributes>
 
 class Orders extends Model<OrdersAttributes, OrdersInput> implements OrdersAttributes {
   id!: number;

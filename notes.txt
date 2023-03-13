@@ -11,3 +11,7 @@ eslint
 npm i eslint
 npm i @typescript-eslint/parser
 npm i @typescript-eslint/eslint-plugin
+date to epoch  time
+const aa = new Date().getTime() 
+
+error typedata unknown

@@ -6,9 +6,9 @@ class ControllerOrder {
         const emailUser = res.locals.userEmail;
         const {idBook, quantityBuy} = req.body
 
-        const buyBook = sOrder.Buy(emailUser,idBook,quantityBuy)
+        const Book = await sOrder.buy(emailUser,idBook,quantityBuy)
 
-        return res.send({message: "buy",data: buyBook})
+        return res.send({message: "buy", data: Book})
     }
     
 }

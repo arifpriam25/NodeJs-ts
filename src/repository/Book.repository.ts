@@ -1,7 +1,8 @@
 import mBook from "../db/models/Books";
+import { BookData } from "../helpers/DTO/dto";
 
 class RepositoryBook {
-    public static findById = async (idBook: string)=> {
+    findById = async (idBook: number)=> {
         const find = await mBook.findOne({
             where: {
                 id: idBook
@@ -11,7 +12,7 @@ class RepositoryBook {
         return find
     }
     
-    public static GetAll = async () => {
+    getAll = async () => {
         const data = await mBook.findAll({
             where: {
                 active: true
@@ -20,12 +21,12 @@ class RepositoryBook {
         // console.log(data)
         return data
     }
-    public static Insert = async (data: any) => {
+    insert = async (data: BookData) => {
         const insert = await mBook.create(data);
 
         return insert
     }
-    public static Update = async (id: string, data: any) => {
+    update = async (id: number, data: object) => {
         const update = await mBook.update(data, {
             where: {
                 id: id
@@ -33,7 +34,7 @@ class RepositoryBook {
         })
         return update
     }
-    public static Delete = async (id: string) => {
+    delete = async (id: number) => {
         const del = await mBook.destroy({
             where: {
                 id: id
@@ -42,4 +43,4 @@ class RepositoryBook {
         return del
     }
 }
-export default RepositoryBook
+export default new RepositoryBook()

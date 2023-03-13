@@ -1,15 +1,15 @@
 import rBase from "./Base.route";
 import cUser from "../controllers/User.controller"
-import UserValidation from "../middleware/validation/UserValidation";
+import validation from "../middleware/validation/validator";
 import Authorization from "../middleware/Authorization";
 
 class UserRoutes extends rBase {
     public routes(): void {
-        this.router.post("/signup",UserValidation.RegisterValidation, cUser.Register);
+        this.router.post("/signup",validation.validateRegister, cUser.register);
         this.router.post("/login",cUser.UserLogin);
-        this.router.get("/refresh-token",cUser.RefreshToken);
-        this.router.get("/current-user",Authorization.Authenticated,cUser.UserDetail);
-        this.router.get("/logout",Authorization.Authenticated,cUser.UserLogout);
+        this.router.get("/refresh-token",cUser.refreshToken);
+        this.router.get("/current-user",Authorization.authenticated,cUser.userDetail);
+        this.router.get("/logout",Authorization.authenticated,cUser.userLogout);
     }
 }
 export default new UserRoutes().router;

@@ -1,16 +1,14 @@
 import { Request, Response } from "express";
 import sUser from "../services/User.service";
-interface UserData {
-    id?: string | null,
-    name?: string | null,
-    email?: string | null,
-    roleId?: string | null
-}
+import { UserData } from "../helpers/DTO/dto";
+
+
+
 class ControlerUser {
-    Register = async (req: Request, res: Response): Promise<Response> => {
+    register = async (req: Request, res: Response): Promise<Response> => {
         const { name, email, password, confirmPassword, roleId } = req.body;
         // const result : UserData = req.body
-        const result: UserData = <UserData>({
+        const data: UserData = <UserData>({
             name,
             email,
             password,
@@ -18,17 +16,12 @@ class ControlerUser {
             roleId
         });
         
-        // const a = result.name;
-        // console.log(result)
-        // return res.send("blocked")
+        const result:UserData = await <UserData>sUser.register(data);
 
-        // const service: sUser = new sUser(req);
-        const data = await sUser.Register(result);
-
-        return res.send({ message: "Register", data: data })
+        return res.send({ message: "Register", data: result })
     }
 
-    UserDetail = async (req: Request, res: Response): Promise<Response> => {
+    userDetail = async (req: Request, res: Response): Promise<Response> => {
         const email = res.locals.userEmail;
         // console.log(email)
         // const service: sUser = new sUser(req);
@@ -40,9 +33,10 @@ class ControlerUser {
         const { email, password } = req.body;
         // const service: sUser = new sUser(req);
         // console.log(email)
-        const data = await sUser.login(email, password);
+        const data : UserData = await <UserData>sUser.login(email, password);
 
-        const reftoken = data.refreshToken;
+        const reftoken = data.refreshToken
+
         res.cookie('refreshToken', reftoken, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000
@@ -51,15 +45,15 @@ class ControlerUser {
         return res.send({ message: "User login", data: data })
     }
 
-    RefreshToken = async (req: Request, res: Response): Promise<Response> => {
+    refreshToken = async (req: Request, res: Response): Promise<Response> => {
         const refreshToken = req.cookies.refreshToken;
         // const service: sUser = new sUser(req);
-        const data = await sUser.RefreshToken(refreshToken);
+        const data = await sUser.refreshToken(refreshToken);
 
         return res.send({ message: "RefreshToken", data: data })
     }
 
-    UserLogout = async (req: Request, res: Response): Promise<Response> => {
+    userLogout = async (req: Request, res: Response): Promise<Response> => {
         const refreshToken = req.cookies.refreshToken;
         const email = res.locals.userEmail;
         // const service: sUser = new sUser(req);

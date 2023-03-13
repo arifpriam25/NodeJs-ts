@@ -2,17 +2,17 @@ import { DataTypes, Model, Optional } from "sequelize";
 import connection from "../../config/dbConnect";
 
 interface RoleAttributes {
-  id?: number,
-  roleName?: string | null,
-  active?: boolean | null,
+  id?: number;
+  roleName?: string | null;
+  active?: boolean | null;
 
-  createAt?: Date,
-  updateAt?: Date
+  createAt?: Date;
+  updateAt?: Date;
 }
 
 
-export interface RoleInput extends Optional<RoleAttributes, 'id'> { }
-export interface RoleOutput extends Required<RoleAttributes> { }
+export type RoleInput = Optional<RoleAttributes, 'id'>
+export type RoleOutput = Required<RoleAttributes>
 
 class Role extends Model<RoleAttributes, RoleInput> implements RoleAttributes {
   public id!: number;

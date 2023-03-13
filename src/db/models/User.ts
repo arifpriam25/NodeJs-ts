@@ -3,24 +3,23 @@ import connection from "../../config/dbConnect";
 import Role from "./Role";
 
 
-interface UserAttributes {
-    id?: number,
-    name?: string | null,
-    email?: string | null,
-    roleId?: number | null,
-    password?: string | null,
-    accessToken?: string | null,
-    balance?: number | null,
-    verified?: boolean | null,
-    active?: boolean | null,
-
-    createAt?: Date,
-    updateAt?: Date
+export interface UserAttributes {
+    id?: number;
+    name?: string | null;
+    email?: string | null;
+    roleId?: number | null;
+    password?: string | null;
+    accessToken?: string | null;
+    balance?: number | null;
+    verified?: boolean | null;
+    active?: boolean | null;
+    createAt?: Date;
+    updateAt?: Date;
 }
 
 
-export interface UserInput extends Optional<UserAttributes, 'id'> { }
-export interface UserOutput extends Required<UserAttributes> { }
+export type UserInput = Optional<UserAttributes, 'id'>
+export type UserOutput = Required<UserAttributes>
 
 class User extends Model<UserAttributes, UserInput> implements UserAttributes {
     public id!: number;
@@ -35,6 +34,7 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
 
     public readonly createAt!: Date;
     public readonly updateAt!: Date;
+
 }
 
 User.init({

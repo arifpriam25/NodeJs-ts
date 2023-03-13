@@ -1,5 +1,6 @@
 import rBook from "../repository/Book.repository"
 import Helper from "../helpers/Helper"
+import { BookData } from "../helpers/DTO/dto"
 
 class ServiceBook {
     // body: Request['body']
@@ -8,49 +9,40 @@ class ServiceBook {
     //     this.body = req.body
     //     this.params = req.params
     // }
-    insert = async ( title:string, author:string, publisher:string, year:number, price:number, quantity:number, active:boolean ) => {
+    insert = async (bookData: BookData) => {
         try {
-            const data = {
-                title,
-                author,
-                publisher,
-                year,
-                price,
-                quantity,
-                active
-            }
-            const insert = await rBook.Insert(data)
+            const insert = await rBook.insert(bookData)
             return Helper.ResponseData("Insert Successs", null, insert)
 
-        } catch (error: any) {
-            return Helper.ResponseData("Error", null, error)
+        } catch (error) {
+            return Helper.ResponseData("Error", error, null)
         }
     }
-    getAll =async () => {
+    getAll = async () => {
         try {
-            const data = await rBook.GetAll()
-            if(!data){
-                return  Helper.ResponseData("no data", null, null)
+            const data = await rBook.getAll()
+            if (!data) {
+                return Helper.ResponseData("no data", null, null)
             }
             return data
             // return Helper.ResponseData("Show All Book", null, data)
-        } catch (error:any) {
-            return  Helper.ResponseData("Error", null, error)
+        } catch (error) {
+            return Helper.ResponseData("Error", error, null)
         }
     }
-    getById =async (id:string) => {
+    getById = async (id: number) => {
         try {
             const data = await rBook.findById(id)
 
-            return  Helper.ResponseData("book : "+id, null, data)
+            return Helper.ResponseData("book : " + id, null, data)
 
-        } catch (error:any) {
-            return  Helper.ResponseData("Error", null, error)
+        } catch (error) {
+            return Helper.ResponseData("Error", error, null)
         }
     }
-    update =async (id:string, title:string, author:string, publisher:string, year:number, price:number, quantity:number, active:boolean ) => {
+    update = async (id: number, title: string, author: string, publisher: string, year: number, price: number, quantity: number, active: boolean) => {
         try {
-            const data = {
+            const data : BookData = {
                 title,
                 author,
                 publisher,
@@ -60,27 +52,27 @@ class ServiceBook {
                 active
             }
             const check = await rBook.findById(id)
-            if(!check){
-                return  Helper.ResponseData("Error id not found", null, check)
+            if (!check) {
+                return Helper.ResponseData("Error id not found", null, check)
             }
             // return data
-            const update = await rBook.Update(id,data)
+            await rBook.update(id, data)
             return Helper.ResponseData("Update Success", null, data)
             // return Helper.ResponseData("Show All Book", null, data)
-        } catch (error:any) {
-            return  Helper.ResponseData("Error", null, error)
+        } catch (error) {
+            return Helper.ResponseData("Error", error, null)
         }
     }
-    delete = async(id:string)=>{
+    delete = async (id: number) => {
         try {
             const check = await rBook.findById(id)
-            if(!check){
-                return  Helper.ResponseData("Error id not found", null, check)
+            if (!check) {
+                return Helper.ResponseData("Error id not found", null, check)
             }
-            const del = await rBook.Delete(id)
+            await rBook.delete(id)
             return Helper.ResponseData("delete success", null, check)
         } catch (error) {
-            return  Helper.ResponseData("Error", null, error)
+            return Helper.ResponseData("Error", error, null)
         }
     }
 }

@@ -8,60 +8,60 @@ class ServiceRole {
         this.body = req.body;
         this.params = req.params;
     }
-    GetById = async()=>{
+    getById = async()=>{
         try {
             const { id } = this.params;
-            const data = await rRole.GetById(id);
+            const data = await rRole.getById(id);
             return data
-        } catch (error: any) {
+        } catch (error) {
             return error
         }
     }
-    GetAll = async () => {
+    getAll = async () => {
         try {
-            const data = rRole.GetAll()
+            const data = rRole.getAll()
             return data
-        } catch (error: any) {
+        } catch (error) {
             return error
         }
     }
-    Create = async () => {
+    create = async () => {
         try {
             const { roleName, active } = this.body; 
-            const data = await rRole.Create(roleName,active)
+            const data = await rRole.create(roleName,active)
 
             return data
-        } catch (error: any) {
+        } catch (error) {
             return error
         }
     }
-    Update = async () => {
+    update = async () => {
         try {
             const { id } = this.params;
             const { roleName, active } = this.body;
-            const check = await rRole.GetById(id);
+            const check = await rRole.getById(id);
             if(!check){
                 return "id NOT FOUND"
             }
-            const data = await rRole.Update(id,roleName,active);
+            const data = await rRole.update(id,roleName,active);
             return data
-        } catch (error: any) {
-            console.log(error.message)
+        } catch (error) {
+            console.log(error)
             return error
         }
     }
-    Delete = async()=> {
+    delete = async()=> {
         try {
             const { id } = this.params;
-            const check = await rRole.GetById(id);
+            const check = await rRole.getById(id);
             if(!check){
                 return "id NOT FOUND"
             }
 
-            const data = await rRole.Delete(id);
+            const data = await rRole.delete(id);
     
             return data
-        } catch (error: any) {
+        } catch (error) {
             return error;
         }
     }

@@ -1,24 +1,17 @@
-import e, {Request} from "express"
-import PasswordHelper from "../helpers/PasswordHelper"
-import Helper from "../helpers/Helper"
-import rUser from "../repository/User.repository"
+
+import PasswordHelper from "../helpers/PasswordHelper";
+import Helper from "../helpers/Helper";
+import rUser from "../repository/User.repository";
+import { UserData,ShowUser,UserDetail } from "../helpers/DTO/dto";
+
 
 class ServiceUser {
-    // body: Request['body'];
-    // params: Request['params']
-    // cookies: Request['cookies']
-    // constructor(req: Request) {
-    //     this.body = req.body;
-    //     this.params = req.params;
-    //     this.cookies = req.cookies;
-    // }
-    Register = async (data:any) => {
+
+    register = async (data: UserData) => {
         try {
-            const hashed = await PasswordHelper.PasswordHashing(data.password);
-            const {name, email,roleId} = data
-            // console.log(result)
-            // return email
-            const dataUpdate = ({
+            const hashed = await PasswordHelper.passwordHashing(data.password as string);
+            const { name, email, roleId } = data
+            const dataUpdate: UserData = ({
                 name,
                 email,
                 password: hashed,
@@ -27,28 +20,28 @@ class ServiceUser {
                 active: true,
                 verified: true
             })
-            const checkEmail = await rUser.findByEmail(dataUpdate.email)
+            const checkEmail = await rUser.findByEmail(dataUpdate.email as string)
             if (checkEmail) {
                 return "Email Used"
             }
-            const input = await rUser.Create(dataUpdate)
+            const input = await rUser.create(dataUpdate)
             return input
-        } catch (error: any) {
+        } catch (error) {
             return error
         }
     }
-    
-    RefreshToken = async (refToken:string) => {
+
+    refreshToken = async (refToken: string) => {
         try {
-            // console.log(refreshToken);
+
             if (!refToken) {
 
-                return "Refresh Token Not Found";
+                return "Refresh Token Not Found"
             }
             const decodedUser = Helper.ExtractRefreshToken(refToken);
-            // console.log(decodedUser);
+
             if (!decodedUser) {
-                return "error decoded user";
+                return "error decoded user"
             }
             const token = Helper.GenerateToken({
                 name: decodedUser.name,
@@ -68,27 +61,35 @@ class ServiceUser {
             }
 
             return resultUser
-        } catch (error:any) {
+        } catch (error) {
             return error
         }
     }
 
-    userDetail = async (email:string) => {
+    userDetail = async (email: string) => {
         try {
             const data = await rUser.findByEmail(email);
             if (!data) {
                 return "email not found"
             }
-            data.password = ""
-            data.accessToken = ""
-            return data
 
-        } catch (error:any) {
+            const result : ShowUser = <ShowUser>({
+                name:data.name,
+                email:data.email,
+                role:"data.Role.roleName",
+                balance:data.balance,
+                verified:data.verified,
+                active:data.active
+
+            })
+            return result
+
+        } catch (error) {
             return error
         }
     }
-    
-    login = async(email:string,password:string) => {
+
+    login = async (email: string, password: string) => {
         try {
             const data = await rUser.findByEmail(email)
 
@@ -110,10 +111,10 @@ class ServiceUser {
             const token = Helper.GenerateToken(dataUser);
             const refreshToken = Helper.GenerateRefreshToken(dataUser); //output
             // console.log("reftoken : "+"-+0_________0+-"+refreshToken)
-    
+
             data.accessToken = refreshToken;
             // await user.save();
-    
+
             const responseUser = {
                 name: data.name,
                 email: data.email,
@@ -121,15 +122,15 @@ class ServiceUser {
                 verified: data.verified,
                 active: data.active,
                 token: token,
-                refreshToken : refreshToken
+                refreshToken: refreshToken
             }
             return responseUser
-        } catch (error:any) {
+        } catch (error) {
             return error
         }
     }
-    
-    logout = async(refToken:string,email:string) =>{
+
+    logout = async (refToken: string, email: string) => {
         try {
             if (!refToken) {
                 return "cookie not found"
@@ -141,10 +142,11 @@ class ServiceUser {
             // res.clearCookie("refreshToken");
             await rUser.updateByEmail(email, { accessToken: null })
             return "success Logout"
-        } catch (error:any) {
+        } catch (error) {
             return error
         }
     }
+    
 }
 
 // export default ServiceUser;

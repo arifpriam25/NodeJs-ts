@@ -1,26 +1,42 @@
-import rUser from "../repository/User.repository"
-import rBook from "../repository/Book.repository"
-import Helper from "../helpers/Helper";
+import rUser from "../repository/User.repository";
+import rBook from "../repository/Book.repository";
+// import Helper from "../helpers/Helper";
+import { BookData,UserData } from "../helpers/DTO/dto";
 
 class ServiceOrders {
-    
-    Buy = async (email: string, idBook: string, quantityBuy: string) => {
+    buy = async (email: string, idBook: number, quantityBuy: number) => {
         try {
-            const dataBook = await rBook.findById(idBook)
-            // console.log(email+idBook+quantityBuy)
-            Helper.ResponseData("no data", "noerr", dataBook)
+            const dataBook = await <BookData>rBook.findById(idBook)
+            // console.log(dataBook)
+            // Helper.ResponseData("no data", null, dataBook)
+
             if (!dataBook) {
                 return "Book Not Found"
             }
-            
-            // const dataUser= await rUser.findByEmail(email)
-            // if(!dataUser){
-            //     return "not found"
-            // }
-            // console.log(dataBook)
-            // return dataBook
-        } catch (error:any) {
-            return error 
+
+            if (dataBook.price == undefined) {
+                return "null"
+            }
+            const totalPrice = dataBook.price * quantityBuy;
+            console.log("total harga : "+totalPrice)
+            const dataUser : UserData= await <UserData>rUser.findByEmail(email)
+            if (dataUser.balance == undefined) {
+                return "null"
+            }
+            if(dataUser.balance < totalPrice){
+                return "saldo tidak cukup";
+            }
+            const userBalance = dataUser.balance - totalPrice;
+            console.log("saldo sekarang : "+dataUser.balance)
+            console.log("total harga : "+totalPrice)
+            console.log("total saldo : "+userBalance)
+
+            const idUser  = dataUser.id;
+            return dataUser
+            const result = await rUser.updateBalance(idUser as number,userBalance)
+            return result
+        } catch (error) {
+            return error
         }
         
         
