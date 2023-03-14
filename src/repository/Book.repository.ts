@@ -1,8 +1,8 @@
-import mBook from "../db/models/Books";
+import mBook,{BooksAttributes} from "../db/models/Books";
 import { BookData } from "../helpers/DTO/dto";
 
 class RepositoryBook {
-    findById = async (idBook: number)=> {
+    findById = async (idBook: number):Promise<BooksAttributes|null>=> {
         const find = await mBook.findOne({
             where: {
                 id: idBook
@@ -41,6 +41,14 @@ class RepositoryBook {
             }
         });
         return del
+    }
+    purchased = async (id: number, quantityNow: number) => {
+        const update = await mBook.update({quantity:quantityNow}, {
+            where: {
+                id: id
+            }
+        })
+        return update
     }
 }
 export default new RepositoryBook()

@@ -18,7 +18,7 @@ class Validation {
             $$strict: true
         };
         // const {name,email,password,confirmPassword,roleId} = req.body
-        const data:RegisterUser= <RegisterUser>req.body
+        const data = req.body as RegisterUser
         // const dataRegist:RegisterUser  = {name,email,password,confirmPassword,roleId.req.body}
 
         // console.log(dataRegist)
@@ -30,7 +30,7 @@ class Validation {
             // req.statusCode
             return res.status(400),res.send(Helper.ResponseData("Bad Request", null, check))
         }
-        return console.log("success validate")
+        // return console.log("success validate")
         next()
     }
 

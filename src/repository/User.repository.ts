@@ -1,8 +1,8 @@
-import mUser, { UserAttributes } from "../db/models/User";
+import mUser, { UserAttributes, UserJoinAttribute } from "../db/models/User";
 import mRole from "../db/models/Role";
 
 class RepositoryUser {
-    public static findById = async (data: UserAttributes)=>{
+    findById = async (data: UserAttributes):Promise<UserAttributes|null>=>{
         const find = await mUser.findOne({
             where: {
                 email: data.email
@@ -11,24 +11,25 @@ class RepositoryUser {
         return find
     }
 
-    public static findByEmail = async (email: string) => {
+    findByEmail = async (email: string):Promise<UserJoinAttribute|null> => {
+        console.log(email)
         const find = await mUser.findOne({
             where: {
                 email: email
             },
             include: {
-                model: mRole,
-                attributes: ["id", "roleName"]
+                model: mRole
             }
         });
+        
         return find
     }
 
-    public static getById = async (id: string) => {
+    getById = async (id: string):Promise<UserAttributes|null> => {
         const data = await mUser.findByPk(id);
         return data
     }
-    public static getAll = async () => {
+    getAll = async ():Promise<UserAttributes|object> => {
         const data = await mUser.findAll({
             where: {
                 active: true
@@ -36,12 +37,12 @@ class RepositoryUser {
         });
         return data
     }
-    public static create = async (data: UserAttributes):Promise<UserAttributes> => {
+    create = async (data: UserAttributes):Promise<UserAttributes> => {
         await mUser.create(data);
 
         return data
     }
-    public static updateByEmail = async (email: string, data: UserAttributes) => {
+    updateByEmail = async (email: string, data: UserAttributes):Promise<UserAttributes> => {
         await mUser.update(data, {
             where: {
                 email: email
@@ -49,7 +50,7 @@ class RepositoryUser {
         })
         return data
     }
-    public static delete = async (id: string) => {
+    delete = async (id: string):Promise<UserAttributes|unknown>=> {
         await mUser.destroy({
             where: {
                 id: id
@@ -57,7 +58,7 @@ class RepositoryUser {
         });
         return id
     }
-    public static updateBalance = async (idUser:number,balance:number) => {
+    updateBalance = async (idUser:number,balance:number):Promise<UserAttributes|object> => {
         const data = await mUser.update({
             balance: balance
         }, {
@@ -67,5 +68,13 @@ class RepositoryUser {
         })
         return data
     }
+    destroyToken = async (email: string):Promise<UserAttributes|object> => {
+        const result = await mUser.update({accessToken:null}, {
+            where: {
+                email: email
+            }
+        })
+        return result
+    }
 }
-export default RepositoryUser
+export default new RepositoryUser

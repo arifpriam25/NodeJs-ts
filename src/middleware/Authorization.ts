@@ -7,7 +7,7 @@ class ClassAuthorization {
             const token = authToken && authToken.split(" ")[1];
             // console.log(authToken)
     
-            if (token === null) {
+            if (token === null || typeof token !== 'string') {
                 return res.status(401).send(Helper.ResponseData("Unauthorized: Auth.001", null, null))
             }
             const result = Helper.ExtractToken(token);

@@ -1,7 +1,9 @@
-import { DataTypes, Model, Optional } from "sequelize";
-import connection from "../../config/dbConnect";
+'use strict';
 
-interface RoleAttributes {
+import { DataTypes, Model, Optional } from "sequelize";
+import connection from "./index";
+
+export interface RoleAttributes {
   id?: number;
   roleName?: string | null;
   active?: boolean | null;
@@ -30,11 +32,11 @@ Role.init({
     type: DataTypes.INTEGER
   },
   roleName: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.STRING
   },
   active: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.BOOLEAN
   }
 }, {

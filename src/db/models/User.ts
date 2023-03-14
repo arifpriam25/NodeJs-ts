@@ -1,6 +1,7 @@
+'use strict';
 import { DataTypes, Model, Optional } from "sequelize";
-import connection from "../../config/dbConnect";
-import Role from "./Role";
+import Role, { RoleAttributes } from "./Role";
+import connection from "./index";
 
 
 export interface UserAttributes {
@@ -15,8 +16,11 @@ export interface UserAttributes {
     active?: boolean | null;
     createAt?: Date;
     updateAt?: Date;
-}
 
+}
+export interface UserJoinAttribute extends UserAttributes {
+    Role?: RoleAttributes;
+}
 
 export type UserInput = Optional<UserAttributes, 'id'>
 export type UserOutput = Required<UserAttributes>
@@ -34,7 +38,6 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
 
     public readonly createAt!: Date;
     public readonly updateAt!: Date;
-
 }
 
 User.init({

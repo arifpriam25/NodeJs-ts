@@ -1,9 +1,11 @@
-import { DataTypes, Model, Optional } from "sequelize";
-import connection from "../../config/dbConnect";
-import Books from "./Books"
-import User from "./User";
+'use strict';
 
-interface OrdersAttributes {
+import { DataTypes, Model, Optional } from "sequelize";
+import connection from "./index";
+import Books, { BooksAttributes } from "./Books"
+import User, { UserAttributes } from "./User";
+
+export interface OrdersAttributes {
   id?: number;
   idUser?: number;
   idBook?: number;
@@ -14,7 +16,10 @@ interface OrdersAttributes {
   createAt?: Date;
   updateAt?: Date;
 }
-
+export interface OrdersJoin extends OrdersAttributes{
+  User?:UserAttributes;
+  Books?:BooksAttributes;
+}
 
 export type OrdersInput = Optional<OrdersAttributes, 'id'>
 export type OrdersOutput = Required<OrdersAttributes>
@@ -64,4 +69,5 @@ Orders.init({
 });
 Orders.belongsTo(Books, { foreignKey: "idBook" });
 Orders.belongsTo(User, { foreignKey: "idUser" });
+
 export default Orders;

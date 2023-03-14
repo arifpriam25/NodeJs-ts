@@ -14,6 +14,7 @@ class UserRoutes extends rBase {
         this.router.post("/update/:id",Auth.authenticated,Validator.insertBook,cBook.update);
         this.router.delete("/delete/:id",Auth.authenticated,cBook.delete);
         this.router.post("/buy",Auth.authenticated,cOrder.buy)
+        this.router.get("/historyOrder",Auth.authenticated,cOrder.historyOrder)
     }
 }
 export default new UserRoutes().router;

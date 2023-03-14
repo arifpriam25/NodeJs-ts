@@ -1,11 +1,11 @@
 import mRole from "../db/models/Role";
 
 class RepositoryRole {
-    public static getById = async (id: string) => {
+    getById = async (id: string) => {
         const data = await mRole.findByPk(id);
         return data
     }
-    public static getAll = async () => {
+    getAll = async () => {
         const data = await mRole.findAll({
             where: {
                 active: true
@@ -14,7 +14,7 @@ class RepositoryRole {
         console.log(data)
         return data
     }
-    public static create = async (roleName: string, active: boolean) => {
+    create = async (roleName: string, active: boolean) => {
         const data = await mRole.create({
             roleName,
             active
@@ -22,7 +22,7 @@ class RepositoryRole {
         
         return data
     }
-    public static update = async (id: string, roleName: string, active: boolean) => {
+    update = async (id: string, roleName: string, active: boolean) => {
         const data = await mRole.update({
             roleName: roleName,
             active: active
@@ -33,7 +33,7 @@ class RepositoryRole {
         })
         return data
     }
-    public static delete = async (id: string) => {
+    delete = async (id: string) => {
         const data = await mRole.findByPk(id);
         if (!data) {
             return data
@@ -47,4 +47,4 @@ class RepositoryRole {
         return data
     }
 }
-export default RepositoryRole
+export default new RepositoryRole

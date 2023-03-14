@@ -1,12 +1,17 @@
 import rUser from "../repository/User.repository";
 import rBook from "../repository/Book.repository";
+import rOrders from "../repository/Order.repository";
 // import Helper from "../helpers/Helper";
-import { BookData,UserData } from "../helpers/DTO/dto";
+import { BookData, UserData,OrdersData } from "../helpers/DTO/dto";
 
 class ServiceOrders {
     buy = async (email: string, idBook: number, quantityBuy: number) => {
         try {
             const dataBook = await <BookData>rBook.findById(idBook)
+            if(!dataBook){
+                throw Error('null')
+            }
+            const now = new Date()
             // console.log(dataBook)
             // Helper.ResponseData("no data", null, dataBook)
 
@@ -18,28 +23,56 @@ class ServiceOrders {
                 return "null"
             }
             const totalPrice = dataBook.price * quantityBuy;
-            console.log("total harga : "+totalPrice)
-            const dataUser : UserData= await <UserData>rUser.findByEmail(email)
+            const totalBook = dataBook.quantity as number - quantityBuy;
+            console.log("total harga : " + totalPrice)
+            const dataUser: UserData = await <UserData>rUser.findByEmail(email)
             if (dataUser.balance == undefined) {
                 return "null"
             }
-            if(dataUser.balance < totalPrice){
+            if (dataUser.balance < totalPrice) {
                 return "saldo tidak cukup";
             }
             const userBalance = dataUser.balance - totalPrice;
-            console.log("saldo sekarang : "+dataUser.balance)
-            console.log("total harga : "+totalPrice)
-            console.log("total saldo : "+userBalance)
+            console.log("saldo sekarang : " + dataUser.balance)
+            console.log("total harga : " + totalPrice)
+            console.log("total saldo : " + userBalance)
 
-            const idUser  = dataUser.id;
-            return dataUser
-            const result = await rUser.updateBalance(idUser as number,userBalance)
+
+            //update user
+            const idUser = dataUser.id;
+            await rUser.updateBalance(idUser as number, userBalance)
+            //update book
+            
+            await rBook.purchased(idBook,totalBook)
+            //insert order
+            const insertOrder = {
+                idUser:dataUser.id,
+                idBook:dataBook.id,
+                quantity:quantityBuy,
+                totalPrice:totalPrice,
+                buyDate: now    
+            }
+            const result = await rOrders.insert(insertOrder)
+
             return result
         } catch (error) {
             return error
         }
-        
-        
+    }
+    ordrData =async () => {
+        const data = await rOrders.getAll();
+
+        const orders: OrdersData[] = data.map((order: any): OrdersData => {
+            return {
+                idOrders: order.id,
+                nameBuyer: order.User.name,
+                bookName: order.Book.title,
+                quantity: order.quantity,
+                totalPrice: order.totalPrice,
+                date: order.buyDate 
+            }
+        });
+        return orders
     }
 }
 export default new ServiceOrders()

@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser"
 import rRole from "./routes/Role.router"
 import rUser from "./routes/User.router"
 import rBook from "./routes/Book.router"
+import rTest from "./routes/Test.route"
 dotenv()
 
 class App {
@@ -27,6 +28,7 @@ class App {
         this.app.use("/role", rRole)
         this.app.use("/user", rUser)
         this.app.use("/book", rBook)
+        this.app.use("/test", rTest)
     }
 
 }

@@ -15,20 +15,11 @@ export interface UserData {
     email?: string;
     password?: string;
     roleId?: number;
-    balance?:number;
+    balance?: number;
     verified?: boolean;
     active?: boolean;
     token?: string;
     refreshToken?: string;
-}
-
-
-export interface RegisterUser {
-    name:string;
-    email:string;   
-    password:string;
-    confirmPassword:string;
-    roleId:string;
 }
 
 export interface InsertBook {
@@ -41,31 +32,45 @@ export interface InsertBook {
     active?: boolean;
 }
 
-export interface ShowUser {
-    id?: number;
-    name?: string;
-    email?: string;
-    role?: string;
-    balance?:number;
-    verified?: boolean;
-    active?: boolean;
+
+//FIX
+
+export interface Token {
+    token: string;
+    refreshToken:string;
 }
-
-
-export interface UserDetail {
+export interface DataToken {
     id: number;
     name: string;
     email: string;
     roleId: number;
+    verified: boolean;
+    active: boolean;
+}
+
+export interface RegisterUser {
+    name: string;
+    email: string;
     password: string;
-    accessToken: string | null;
+    confirmPassword: string;
+    roleId: number;
+}
+
+export interface ShowUser {
+    id: number;
+    name: string;
+    email: string;
+    role: string;
     balance: number;
     verified: boolean;
     active: boolean;
-    createdAt: string;
-    updatedAt: string;
-    Role: {
-      id: number;
-      roleName: string;
-    };
-  }
+}
+
+export interface OrdersData {
+    idOrders:number;
+    nameBuyer:string;
+    bookName:string;
+    quantity:number;
+    totalPrice:number;
+    date:Date;
+}

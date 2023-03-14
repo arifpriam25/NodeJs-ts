@@ -1,20 +1,21 @@
-import { DataTypes, Model, Optional } from "sequelize";
-import connection from "../../config/dbConnect";
+'use strict';
 
-interface BooksAttributes {
+import { DataTypes, Model, Optional } from "sequelize";
+import connection from "./index";
+
+export interface BooksAttributes {
   id?: number;
-  title?: string | null;
-  author?: string | null;
-  publisher?: string | null;
-  year?: number | null;
-  price?: number | null;
-  quantity?: number | null;
-  active?: boolean | null;
+  title?: string;
+  author?: string;
+  publisher?: string;
+  year?: number;
+  price?: number;
+  quantity?: number;
+  active?: boolean;
 
   createAt?: Date;
   updateAt?: Date;
 }
-
 
 export type BooksInput = Optional<BooksAttributes, 'id'>
 export type BooksOutput = Required<BooksAttributes>
