@@ -23,6 +23,9 @@ export interface OrdersJoin extends OrdersAttributes{
 
 export type OrdersInput = Optional<OrdersAttributes, 'id'>
 export type OrdersOutput = Required<OrdersAttributes>
+// export type OrderJoinsReq = Required<OrderJoin>
+
+export type OrderJoinsReqJoin = Required<OrdersJoin>
 
 class Orders extends Model<OrdersAttributes, OrdersInput> implements OrdersAttributes {
   id!: number;

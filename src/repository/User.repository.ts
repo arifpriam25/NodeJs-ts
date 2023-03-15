@@ -2,6 +2,11 @@ import mUser, { UserAttributes, UserJoinAttribute } from "../db/models/User";
 import mRole from "../db/models/Role";
 
 class RepositoryUser {
+    create = async (data: UserAttributes):Promise<UserAttributes> => {
+        await mUser.create(data);
+
+        return data
+    }
     findById = async (data: UserAttributes):Promise<UserAttributes|null>=>{
         const find = await mUser.findOne({
             where: {
@@ -37,11 +42,7 @@ class RepositoryUser {
         });
         return data
     }
-    create = async (data: UserAttributes):Promise<UserAttributes> => {
-        await mUser.create(data);
-
-        return data
-    }
+    
     updateByEmail = async (email: string, data: UserAttributes):Promise<UserAttributes> => {
         await mUser.update(data, {
             where: {

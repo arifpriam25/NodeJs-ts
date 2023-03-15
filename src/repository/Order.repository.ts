@@ -7,7 +7,7 @@ class RepositoryOrder {
         const result = await Orders.create(data);
         return result
     }
-    getAll = async (): Promise<OrdersJoin[]> => {
+    getAll = async (): Promise<Array<OrdersJoin>> => {
         const result = await Orders.findAll({
             include: [
                 {

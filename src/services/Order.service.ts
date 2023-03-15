@@ -59,10 +59,10 @@ class ServiceOrders {
             return error
         }
     }
-    ordrData =async () => {
+    ordrData =async ():Promise<OrdersData[]> => {
         const data = await rOrders.getAll();
 
-        const orders: OrdersData[] = data.map((order: any): OrdersData => {
+        const orders: OrdersData[] = data.map((order:any): OrdersData => {
             return {
                 idOrders: order.id,
                 nameBuyer: order.User.name,
