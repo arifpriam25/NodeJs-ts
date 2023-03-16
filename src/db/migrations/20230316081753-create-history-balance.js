@@ -11,13 +11,25 @@ module.exports = {
       },
       idUser: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references:{
+          model:'Users',
+          key: 'id'
+        }
       },
       idOrder: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references:{
+          model:'Orders',
+          key: 'id'
+        }
       },
       idDepo: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references:{
+          model:'Deposits',
+          key: 'id'
+        }
       },
       amount: {
         allowNull: false,

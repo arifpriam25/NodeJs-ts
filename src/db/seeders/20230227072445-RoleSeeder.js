@@ -16,14 +16,14 @@ module.exports = {
       {
         roleName: 'Admin',
         active: true,
-        createdAt: new Date().getTime(),
-        updatedAt: new Date().getTime(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         roleName: 'User',
         active: true,
-        createdAt: new Date().getTime(),
-        updatedAt: new Date().getTime(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       }], {});
   },
 

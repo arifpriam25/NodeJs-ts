@@ -10,12 +10,19 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       idUser: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references:{
+          model:'Users',
+          key: 'id'
+        }
       },
       amount: {
+        allowNull: false,
         type: Sequelize.FLOAT
       },
       method: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {
@@ -28,7 +35,7 @@ module.exports = {
       }
     });
   },
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.dropTable('Deposits');
   }
 };
