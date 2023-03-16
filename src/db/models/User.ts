@@ -5,17 +5,15 @@ import connection from "./index";
 
 
 export interface UserAttributes {
-    id?: number;
-    name?: string | null;
-    email?: string | null;
-    roleId?: number | null;
-    password?: string | null;
-    accessToken?: string | null;
-    balance?: number | null;
-    verified?: boolean | null;
-    active?: boolean | null;
-    createAt?: Date;
-    updateAt?: Date;
+    id: number;
+    name: string;
+    email: string;
+    roleId: number;
+    password: string;
+    accessToken: string | null;
+    balance: number;
+    verified: boolean;
+    active: boolean;
 
 }
 export interface UserJoinAttribute extends UserAttributes {
@@ -35,9 +33,6 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
     public balance!: number;
     public verified!: boolean;
     public active!: boolean;
-
-    public readonly createAt!: Date;
-    public readonly updateAt!: Date;
 }
 
 User.init({
@@ -49,19 +44,19 @@ User.init({
     },
     name: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
     },
     email: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
     },
     roleId: {
         type: DataTypes.INTEGER,
-        allowNull: true
+        allowNull: false
     },
     password: {
         type: DataTypes.TEXT,
-        allowNull: true
+        allowNull: false
     },
     accessToken: {
         type: DataTypes.TEXT,
@@ -69,15 +64,15 @@ User.init({
     },
     balance: {
         type: DataTypes.FLOAT,
-        allowNull: true
+        allowNull: false
     },
     verified: {
         type: DataTypes.BOOLEAN,
-        allowNull: true
+        allowNull: false
     },
     active: {
         type: DataTypes.BOOLEAN,
-        allowNull: true
+        allowNull: false
     }
 
 }, {

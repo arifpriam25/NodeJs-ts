@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up(queryInterface) {
     /**
      * Add seed commands here.
      *
@@ -16,18 +16,18 @@ module.exports = {
       {
         roleName: 'Admin',
         active: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().getTime(),
+        updatedAt: new Date().getTime(),
       },
       {
         roleName: 'User',
         active: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().getTime(),
+        updatedAt: new Date().getTime(),
       }], {});
   },
 
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     /**
      * Add commands to revert seed here.
      *

@@ -58,7 +58,7 @@ import Books from '../db/models/Books';
 class Testing {
     test = async (req:Request,res:Response) => {
         const t = await sequelizeConnection.transaction()
-            const a = new Date()
+            const a = new Date().getTime()
         try {
             await User.update(
                 { balance: 200000 },

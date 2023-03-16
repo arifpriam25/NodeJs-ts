@@ -4,17 +4,15 @@ import { DataTypes, Model, Optional } from "sequelize";
 import connection from "./index";
 
 export interface BooksAttributes {
-  id?: number;
-  title?: string;
-  author?: string;
-  publisher?: string;
-  year?: number;
-  price?: number;
-  quantity?: number;
-  active?: boolean;
+  id: number;
+  title: string;
+  author: string;
+  publisher: string;
+  year: number;
+  price: number;
+  quantity: number;
+  active: boolean;
 
-  createAt?: Date;
-  updateAt?: Date;
 }
 
 export type BooksInput = Optional<BooksAttributes, 'id'>
@@ -29,8 +27,6 @@ class Books extends Model<BooksAttributes, BooksInput> implements BooksAttribute
   price!: number;
   quantity!: number;
   active!: boolean;
-  public readonly createAt!: Date
-  public readonly updateAt!: Date
 }
 
 Books.init({

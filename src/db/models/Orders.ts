@@ -6,15 +6,12 @@ import Books, { BooksAttributes } from "./Books"
 import User, { UserAttributes } from "./User";
 
 export interface OrdersAttributes {
-  id?: number;
-  idUser?: number;
-  idBook?: number;
-  quantity?: number;
-  totalPrice?: number;
-  buyDate?: Date;
-
-  createAt?: Date;
-  updateAt?: Date;
+  id: number;
+  idUser: number;
+  idBook: number;
+  quantity: number;
+  totalPrice: number;
+  buyDate: number;
 }
 export interface OrdersJoin extends OrdersAttributes{
   User?:UserAttributes;
@@ -33,9 +30,7 @@ class Orders extends Model<OrdersAttributes, OrdersInput> implements OrdersAttri
   idBook!: number;
   quantity!: number;
   totalPrice!: number;
-  buyDate!: Date;
-  public readonly createAt!: Date;
-  public readonly updateAt!: Date;
+  buyDate!: number;
 }
 
 Orders.init({
@@ -46,24 +41,32 @@ Orders.init({
     type: DataTypes.INTEGER
   },
   idUser: {
-    allowNull: true,
-    type: DataTypes.INTEGER
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'Users',
+      key: 'id'
+    },
   },
   idBook: {
-    allowNull: true,
-    type: DataTypes.INTEGER
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'Books',
+      key: 'id'
+    },
   },
   quantity: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.INTEGER
   },
   totalPrice: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.FLOAT
   },
   buyDate: {
-    allowNull: true,
-    type: DataTypes.DATE
+    allowNull: false,
+    type: DataTypes.FLOAT  
   },
 }, {
   timestamps: true,

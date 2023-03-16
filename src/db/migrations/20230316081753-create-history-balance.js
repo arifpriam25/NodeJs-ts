@@ -1,10 +1,8 @@
 'use strict';
-
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Orders', {
+    await queryInterface.createTable('HistoryBalances', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,29 +10,21 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       idUser: {
-        type: Sequelize.INTEGER,
-        references:{
-          model:'Users',
-          key: 'id'
-        }
-      },
-      idBook: {
-        type: Sequelize.INTEGER,
-        references:{
-          model:'Books',
-          key: 'id'
-        }
-      },
-      quantity: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
-      price: {
+      idOrder: {
+        type: Sequelize.INTEGER
+      },
+      idDepo: {
+        type: Sequelize.INTEGER
+      },
+      amount: {
+        allowNull: false,
         type: Sequelize.FLOAT
       },
-      active: {
-        type: Sequelize.BOOLEAN
-      },
-      buyDate: {
+      balance: {
+        allowNull: false,
         type: Sequelize.FLOAT
       },
       createdAt: {
@@ -48,6 +38,6 @@ module.exports = {
     });
   },
   async down(queryInterface) {
-    await queryInterface.dropTable('Orders');
+    await queryInterface.dropTable('HistoryBalances');
   }
 };

@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import sBook from "../services/Book.service";
-import { BookData } from "../helpers/DTO/dto";
+import {InputBook } from "../helpers/DTO/dto";
 
 
 class ControllerRole {
     Insert = async (req: Request, res: Response): Promise<Response> => {
         // const service: sBook = new sBook(req);
         const { title, author, publisher, year, price, quantity, active } = req.body
-        const bookData: BookData = <BookData>{
+        const bookData: InputBook = <InputBook>{
             title,
             author,
             publisher,

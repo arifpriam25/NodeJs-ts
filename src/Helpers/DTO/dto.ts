@@ -18,7 +18,7 @@ export interface UserData {
     balance?: number;
     verified?: boolean;
     active?: boolean;
-    token?: string;
+    accessToken?: string;
     refreshToken?: string;
 }
 
@@ -73,4 +73,14 @@ export interface OrdersData {
     quantity:number;
     totalPrice:number;
     date:Date;
+}
+
+export interface InputBook {
+    title: string;
+    author: string;
+    publisher: string;
+    year: number;
+    price: number;
+    quantity: number;
+    active: boolean;
 }

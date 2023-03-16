@@ -4,12 +4,10 @@ import { DataTypes, Model, Optional } from "sequelize";
 import connection from "./index";
 
 export interface RoleAttributes {
-  id?: number;
-  roleName?: string | null;
-  active?: boolean | null;
+  id: number;
+  roleName: string;
+  active: boolean;
 
-  createAt?: Date;
-  updateAt?: Date;
 }
 
 
@@ -20,8 +18,6 @@ class Role extends Model<RoleAttributes, RoleInput> implements RoleAttributes {
   public id!: number;
   public roleName!: string;
   public active!: boolean;
-  public readonly createAt!: Date;
-  public readonly updateAt!: Date;
 }
 
 Role.init({
@@ -36,6 +32,7 @@ Role.init({
     type: DataTypes.STRING
   },
   active: {
+    defaultValue: false,
     allowNull: false,
     type: DataTypes.BOOLEAN
   }

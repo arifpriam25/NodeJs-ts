@@ -1,8 +1,8 @@
-import mUser, { UserAttributes, UserJoinAttribute } from "../db/models/User";
+import mUser, { UserAttributes, UserInput, UserJoinAttribute } from "../db/models/User";
 import mRole from "../db/models/Role";
 
 class RepositoryUser {
-    create = async (data: UserAttributes):Promise<UserAttributes> => {
+    create = async (data: UserInput):Promise<UserInput> => {
         await mUser.create(data);
 
         return data
@@ -43,7 +43,7 @@ class RepositoryUser {
         return data
     }
     
-    updateByEmail = async (email: string, data: UserAttributes):Promise<UserAttributes> => {
+    updateByEmail = async (email: string, data: UserInput):Promise<UserInput> => {
         await mUser.update(data, {
             where: {
                 email: email

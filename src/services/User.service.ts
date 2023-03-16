@@ -3,7 +3,8 @@ import PasswordHelper from "../helpers/PasswordHelper";
 import Helper from "../helpers/Helper";
 import ResponseData from "../helpers/ResponseData";
 import rUser from "../repository/User.repository";
-import { UserData, ShowUser, DataToken, Token } from "../helpers/DTO/dto";
+import { ShowUser, DataToken, Token, RegisterUser } from "../helpers/DTO/dto";
+import { UserInput } from "../db/models/User";
 
 
 class ServiceUser {
@@ -14,8 +15,7 @@ class ServiceUser {
             if(!data){
                 return ResponseData.resp(400,"user not found",data)
             }
-            const a = data.Role
-            if(!a){
+            if(!data.Role){
                 return ResponseData.resp(400,"error role",data)
             }
 
@@ -23,7 +23,7 @@ class ServiceUser {
                 id:data.id,
                 name:data.name,
                 email:data.email,
-                role:data.Role?.roleName,
+                role:data.Role.roleName,
                 balance:data.balance,
                 verified:data.verified,
                 active:data.active
@@ -35,7 +35,7 @@ class ServiceUser {
         }
     }
 
-    login = async (email: string, password: string)=> {
+    login = async (email: string, password: string):Promise<Token|unknown>=> {
         try {
             const data = await rUser.findByEmail(email)
             if(!data){
@@ -84,34 +84,37 @@ class ServiceUser {
         }
     }
 
-    register = async (data: UserData)=> {
+    register = async (data: RegisterUser):Promise<UserInput|unknown>=> {
         try {
             const hashed = await PasswordHelper.passwordHashing(data.password as string);
             const { name, email, roleId } = data
-            const dataUpdate = ({
+            const InsertData = ({
                 name,
                 email,
                 password: hashed,
                 roleId,
                 balance: 0,
                 active: true,
-                verified: true
+                verified: true,
+                accessToken: null,
+                updatedAt: new Date().getTime(),
+                createdAt: new Date().getTime(),
             })
             
-            const checkEmail = await rUser.findByEmail(dataUpdate.email as string)
+            const checkEmail = await rUser.findByEmail(InsertData.email as string)
             
             if (checkEmail) {
                 return ResponseData.resp(200,"Email used with another account",data)
             }
             // return (dataUpdate)
-            const input = await rUser.create(dataUpdate)
+            const input = await rUser.create(InsertData)
             return input
         } catch (error) {
             return error
         }
     }
 
-    refreshToken = async (refToken: string) => {
+    refreshToken = async (refToken: string):Promise<unknown> => {
         try {
 
             if (!refToken) {
@@ -145,7 +148,7 @@ class ServiceUser {
         }
     }
 
-    logout = async (refToken: string, email: string) => {
+    logout = async (refToken: string, email: string):Promise<unknown>=> {
         try {
             if (!refToken) {
                 return ResponseData.resp(400,"error cookie",refToken)
@@ -155,7 +158,18 @@ class ServiceUser {
                 return ResponseData.resp(400,"user not found",result)
             }
             // res.clearCookie("refreshToken");
-            await rUser.updateByEmail(email, { accessToken: null })
+            await rUser.updateByEmail(email, {
+                accessToken: null,
+                name: result.name,
+                email: result.email,
+                roleId: result.roleId,
+                password: result.password,
+                balance: result.balance,
+                verified: result.verified,
+                active: result.active,
+                updatedAt: new Date().getTime(),
+                createdAt: new Date().getTime(),
+            })
             return ResponseData.resp(400,"Logout Success",result)
         } catch (error) {
             return error

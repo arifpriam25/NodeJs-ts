@@ -1,5 +1,4 @@
-import mBook,{BooksAttributes} from "../db/models/Books";
-import { BookData } from "../helpers/DTO/dto";
+import mBook,{BooksAttributes, BooksInput} from "../db/models/Books";
 
 class RepositoryBook {
     findById = async (idBook: number):Promise<BooksAttributes|null>=> {
@@ -21,7 +20,7 @@ class RepositoryBook {
         // console.log(data)
         return data
     }
-    insert = async (data: BookData) => {
+    insert = async (data: BooksInput) => {
         const insert = await mBook.create(data);
 
         return insert

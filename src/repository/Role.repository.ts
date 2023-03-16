@@ -1,10 +1,11 @@
-import mRole from "../db/models/Role";
+import mRole, { RoleAttributes, RoleInput } from "../db/models/Role";
 
 class RepositoryRole {
-    getById = async (id: string) => {
+    getById = async (id: number):Promise<RoleAttributes|null> => {
         const data = await mRole.findByPk(id);
         return data
     }
+
     getAll = async () => {
         const data = await mRole.findAll({
             where: {
@@ -14,15 +15,16 @@ class RepositoryRole {
         console.log(data)
         return data
     }
-    create = async (roleName: string, active: boolean) => {
+
+    create = async (roleName: string, active: boolean):Promise<RoleInput> => {
         const data = await mRole.create({
             roleName,
             active
         });
-        
         return data
     }
-    update = async (id: string, roleName: string, active: boolean) => {
+
+    update = async (id: number, roleName: string, active: boolean) => {
         const data = await mRole.update({
             roleName: roleName,
             active: active
@@ -33,7 +35,8 @@ class RepositoryRole {
         })
         return data
     }
-    delete = async (id: string) => {
+    
+    delete = async (id: number) => {
         const data = await mRole.findByPk(id);
         if (!data) {
             return data

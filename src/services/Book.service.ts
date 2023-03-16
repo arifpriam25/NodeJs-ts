@@ -1,6 +1,6 @@
 import rBook from "../repository/Book.repository"
 import Helper from "../helpers/Helper"
-import { BookData } from "../helpers/DTO/dto"
+import { BookData, InputBook } from "../helpers/DTO/dto"
 
 class ServiceBook {
     // body: Request['body']
@@ -9,7 +9,7 @@ class ServiceBook {
     //     this.body = req.body
     //     this.params = req.params
     // }
-    insert = async (bookData: BookData) => {
+    insert = async (bookData: InputBook) => {
         try {
             const insert = await rBook.insert(bookData)
             return Helper.ResponseData("Insert Successs", null, insert)
