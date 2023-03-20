@@ -13,9 +13,9 @@ export interface OrdersAttributes {
   price: number;
   buyDate: Date;
 }
-export interface OrdersJoin extends OrdersAttributes{
-  User?:UserAttributes;
-  Books?:BooksAttributes;
+export interface OrdersJoin extends OrdersAttributes {
+  User?: UserAttributes;
+  Book?: BooksAttributes;
 }
 
 export type OrdersInput = Optional<OrdersAttributes, 'id'>
@@ -41,18 +41,12 @@ Orders.init({
   idUser: {
     allowNull: false,
     type: DataTypes.INTEGER,
-    references: {
-      model: 'Users',
-      key: 'id'
-    },
+
   },
   idBook: {
     allowNull: false,
     type: DataTypes.INTEGER,
-    references: {
-      model: 'Books',
-      key: 'id'
-    },
+
   },
   quantity: {
     allowNull: false,
@@ -64,7 +58,7 @@ Orders.init({
   },
   buyDate: {
     allowNull: false,
-    type: DataTypes.DATE 
+    type: DataTypes.DATE
   },
 }, {
   timestamps: true,

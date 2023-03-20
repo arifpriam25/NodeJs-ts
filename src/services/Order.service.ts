@@ -3,11 +3,11 @@ import RepositoryBook from "../repository/Book.repository";
 import RepositoryOrder from "../repository/Order.repository";
 import { OrdersJoin } from "../db/models/Orders";
 // import Helper from "../helpers/Helper";
-import { BookData, UserData, OrdersData } from "../helpers/DTO/dto";
+import { UserData, OrdersData } from "../helpers/DTO/dto";
 
 class ServiceOrders {
-    buy = async (email: string, idBook: number, quantityBuy: number) => {
-        const dataBook = await <BookData>RepositoryBook.findById(idBook)
+    buy = async (email: string, idBook: number, quantityBuy: number): Promise<object | unknown> => {
+        const dataBook = await RepositoryBook.findById(idBook)
 
         if (!dataBook) {
             return "Book Not Found"
@@ -52,30 +52,33 @@ class ServiceOrders {
         }
         // await RepositoryBook.purchased(idBook, totalBook)
         // await RepositoryUser.updateBalance(idUser as number, userBalance)
-        const result = await RepositoryOrder.Orders(orderData,userBalance,idUser,totalBook,idBook)
+        const result = await RepositoryOrder.Orders(orderData, userBalance, idUser, totalBook, idBook)
 
-        return result
+        return { result, orderData }
     }
-    ordrData = async (): Promise<OrdersData[]> => {
+    orderData = async (): Promise<OrdersData[]> => {
         const data = await RepositoryOrder.getAll();
+        // console.log(data)
 
         const orders: OrdersData[] = data.map((order: OrdersJoin): OrdersData => {
             if (!order.User) {
                 throw new Error('User Not Found')
             }
-            if (!order.Books) {
+            if (!order.Book) {
                 throw new Error('User Not Found')
             }
             return {
                 idOrders: order.id,
                 nameBuyer: order.User.name,
-                bookName: order.Books.title,
+                bookName: order.Book.title,
                 quantity: order.quantity,
                 totalPrice: order.price,
                 date: order.buyDate
             }
         });
+        console.log(orders)
         return orders
+
     }
 }
 export default new ServiceOrders()

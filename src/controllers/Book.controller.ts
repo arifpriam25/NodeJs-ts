@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import sBook from "../services/Book.service";
-import {InputBook } from "../helpers/DTO/dto";
+import { InputBook } from "../helpers/DTO/dto";
 import ResponseData from "../helpers/ResponseData";
 
 
@@ -8,44 +8,44 @@ class ControllerRole {
     Insert = async (req: Request, res: Response): Promise<Response> => {
         try {
             // const service: sBook = new sBook(req);
-        const { title, author, publisher, year, price, quantity, active } = req.body
-        const bookData: InputBook = <InputBook>{
-            title,
-            author,
-            publisher,
-            year,
-            price,
-            quantity,
-            active,
-        }
-        const result = await sBook.insert(bookData)
+            const { title, author, publisher, year, price, quantity, active } = req.body
+            const bookData: InputBook = <InputBook>{
+                title,
+                author,
+                publisher,
+                year,
+                price,
+                quantity,
+                active,
+            }
+            const result = await sBook.insert(bookData)
 
-        return res.send(ResponseData.resp(200, "Login", result))
+            return res.send(ResponseData.resp(200, "Insert", result))
         } catch (error) {
             return res.send(error)
         }
-        
+
     }
 
     getAll = async (req: Request, res: Response): Promise<Response> => {
         try {
             // const service: sBook = new sBook(req);
-        const result = await sBook.getAll();
+            const result = await sBook.getAll();
 
-        return res.send(ResponseData.resp(200, "Login", result))
+            return res.send(ResponseData.resp(200, "Get all books", result))
         } catch (error) {
             return res.send(ResponseData.resp(400, "Error", error))
         }
-        
-        
+
+
     }
     getById = async (req: Request, res: Response): Promise<Response> => {
         try {
             // const service: sBook = new sBook(req);
-        const id = parseInt(req.params.id)
+            const id = parseInt(req.params.id)
 
-        const result = await sBook.delete(id);
-        return res.send(ResponseData.resp(200, "Login", result))
+            const result = await sBook.delete(id);
+            return res.send(ResponseData.resp(200, "get by id", result))
         } catch (error) {
             return res.send(ResponseData.resp(400, "Error", error))
         }
@@ -53,10 +53,10 @@ class ControllerRole {
     update = async (req: Request, res: Response): Promise<Response> => {
         try {
             // const service: sBook = new sBook(req);
-        const id = parseInt(req.params.id)
+            const id = parseInt(req.params.id)
 
-        const result = await sBook.delete(id);
-        return res.send(ResponseData.resp(200, "Login", result))
+            const result = await sBook.delete(id);
+            return res.send(ResponseData.resp(200, "update", result))
         } catch (error) {
             return res.send(ResponseData.resp(400, "Error", error))
         }
@@ -64,14 +64,14 @@ class ControllerRole {
     delete = async (req: Request, res: Response): Promise<Response> => {
         try {
             // const service: sBook = new sBook(req);
-        const id = parseInt(req.params.id)
+            const id = parseInt(req.params.id)
 
-        const result = await sBook.delete(id);
-        return res.send(ResponseData.resp(200, "Login", result))
+            const result = await sBook.delete(id);
+            return res.send(ResponseData.resp(200, "delete", result))
         } catch (error) {
             return res.send(ResponseData.resp(400, "Error", error))
         }
-        
+
     }
 }
 

@@ -1,6 +1,5 @@
 import repositoryBook from "../repository/Book.repository"
-import Helper from "../helpers/Helper"
-import { BookData, InputBook } from "../helpers/DTO/dto"
+import { InputBook } from "../helpers/DTO/dto"
 
 class ServiceBook {
     insert = async (bookData: InputBook) => {
@@ -22,7 +21,7 @@ class ServiceBook {
 
     }
     update = async (id: number, title: string, author: string, publisher: string, year: number, price: number, quantity: number, active: boolean) => {
-        const result: BookData = {
+        const result = {
             title,
             author,
             publisher,
@@ -33,7 +32,7 @@ class ServiceBook {
         }
         const check = await repositoryBook.findById(id)
         if (!check) {
-            return Helper.ResponseData("Error id not found", null, check)
+           return check
         }
         // return data
         await repositoryBook.update(id, result)

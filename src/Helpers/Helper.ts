@@ -4,22 +4,6 @@ import { UserData } from "./DTO/dto";
 dotenv.config();
 
 class Helper {
-    ResponseData = (message: string | null, error: unknown | null, data: object | null) => {
-        if (error != null && error instanceof Error) {
-            const response = {
-                message: error.message,
-                errors: error,
-                data: null
-            }
-            return response;
-        }
-        const res = {
-            message,
-            errors: error,
-            data: data
-        };
-        return res;
-    }
 
     GenerateToken = (data: object): string => {
         const token = jwt.sign(data, process.env.JWT_TOKEN as string, { expiresIn: "1d" });

@@ -1,14 +1,3 @@
-export interface BookData {
-    id?: number;
-    title?: string;
-    author?: string;
-    publisher?: string;
-    year?: number;
-    price?: number;
-    quantity?: number;
-    active?: boolean;
-}
-
 export interface UserData {
     id?: number;
     name?: string;
@@ -22,23 +11,22 @@ export interface UserData {
     refreshToken?: string;
 }
 
-export interface InsertBook {
-    title?: string;
-    author?: string;
-    publisher?: string;
-    year?: number;
-    price?: number;
-    quantity?: number;
-    active?: boolean;
-}
-
-
 //FIX
+export interface InsertBook {
+    title: string;
+    author: string;
+    publisher: string;
+    year: number;
+    price: number;
+    quantity: number;
+    active: boolean;
+}
 
 export interface Token {
     token: string;
-    refreshToken:string;
+    refreshToken: string;
 }
+
 export interface DataToken {
     id: number;
     name: string;
@@ -67,12 +55,12 @@ export interface ShowUser {
 }
 
 export interface OrdersData {
-    idOrders:number;
-    nameBuyer:string;
-    bookName:string;
-    quantity:number;
-    totalPrice:number;
-    date:Date;
+    idOrders: number;
+    nameBuyer: string;
+    bookName: string;
+    quantity: number;
+    totalPrice: number;
+    date: Date;
 }
 
 export interface InputBook {
@@ -83,4 +71,13 @@ export interface InputBook {
     price: number;
     quantity: number;
     active: boolean;
+}
+
+export interface OrderData {
+
+    idUser: number;
+    idBook: number;
+    quantity: number;
+    price: number;
+    buyDate: Date;
 }

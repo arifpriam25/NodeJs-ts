@@ -1,9 +1,9 @@
 import { Response, Request,NextFunction } from "express";
 import Validator from "fastest-validator";
-import Helper from "../../helpers/Helper";
 
 //dto   
 import { RegisterUser,InsertBook } from "../../helpers/DTO/dto";
+import ResponseData from "../../helpers/ResponseData";
 
 const v = new Validator();
 class Validation {
@@ -17,20 +17,14 @@ class Validation {
             roleId: { type: "number" },
             $$strict: true
         };
-        // const {name,email,password,confirmPassword,roleId} = req.body
         const data = req.body as RegisterUser
-        // const dataRegist:RegisterUser  = {name,email,password,confirmPassword,roleId.req.body}
-
-        // console.log(dataRegist)
-        // const check = v.compile(validate)
-        // const cek = check(dataRegist)
         const check = v.validate(data,validate)
 
         if(check !== true){
             // req.statusCode
-            return res.status(400),res.send(Helper.ResponseData("Bad Request", null, check))
+            return res.status(400),res.send(ResponseData.resp(400, "Bad Request", check))
         }
-        // return console.log("success validate")
+
         next()
     }
 
@@ -50,9 +44,8 @@ class Validation {
         
         const check = v.validate(data,validate)
         if(check !== true){
-            return res.status(400).send(Helper.ResponseData("Bad Request", null, check))
+            return res.status(400).send(ResponseData.resp(400, "Bad Request", check))
         }
-        // return check
         next();
     }
 

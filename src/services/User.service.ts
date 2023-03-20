@@ -1,14 +1,14 @@
 
 import PasswordHelper from "../helpers/PasswordHelper";
 import Helper from "../helpers/Helper";
-import rUser from "../repository/User.repository";
+import RepositoryUser from "../repository/User.repository";
 import { ShowUser, DataToken, Token, RegisterUser } from "../helpers/DTO/dto";
 import { UserInput } from "../db/models/User";
 
 class ServiceUser {
     userDetail = async (email: string): Promise<ShowUser|unknown> => {
 
-        const data = await rUser.findByEmail(email);
+        const data = await RepositoryUser.findByEmail(email);
         if (!data) {
             return data
         }
@@ -29,7 +29,7 @@ class ServiceUser {
     }
 
     login = async (email: string, password: string): Promise<Token|unknown> => {
-        const data = await rUser.findByEmail(email)
+        const data = await RepositoryUser.findByEmail(email)
         if (!data) {
             return 'user not found'
         }
@@ -77,13 +77,13 @@ class ServiceUser {
             accessToken: null,
         })
 
-        const checkEmail = await rUser.findByEmail(InsertData.email as string)
+        const checkEmail = await RepositoryUser.findByEmail(InsertData.email as string)
 
         if (checkEmail) {
             return ''
         }
         // return (dataUpdate)
-        const input = await rUser.create(InsertData)
+        const input = await RepositoryUser.create(InsertData)
         return input
     }
 
@@ -120,12 +120,12 @@ class ServiceUser {
         if (!refToken) {
             return 'Error'
         }
-        const result = await rUser.findByEmail(email);
+        const result = await RepositoryUser.findByEmail(email);
         if (!result) {
             return "tidak ditemukan"
         }
         // res.clearCookie("refreshToken");
-        await rUser.updateByEmail(email, {
+        await RepositoryUser.updateByEmail(email, {
             accessToken: null,
             name: result.name,
             email: result.email,
