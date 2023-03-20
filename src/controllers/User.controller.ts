@@ -64,7 +64,7 @@ class ControlerUser {
             res.clearCookie('refreshToken')
             return res.send(ResponseData.resp(200, "Success Logout", [result]))
         } catch (error) {
-            return res.send(error);
+            return res.send(ResponseData.resp(500, "Error", error));
         }
 
     }

@@ -10,24 +10,24 @@ class ServiceOrders {
         const dataBook = await RepositoryBook.findById(idBook)
 
         if (!dataBook) {
-            throw console.error("data notfound");
+            throw Error("data notfound");
         }
 
         if (dataBook.price == undefined) {
-            throw console.error("databook.price u");
+            throw Error("databook.price u");
         }
         const totalPrice = dataBook.price * quantityBuy;
         const totalBook = dataBook.quantity as number - quantityBuy;
 
         const dataUser: UserData = await <UserData>RepositoryUser.findByEmail(email)
         if (dataUser.id == undefined) {
-            throw console.error("datauser.id u");
+            throw Error("datauser.id u");
         }
         if (dataBook.id == undefined) {
-            throw console.error("databook.id u");
+            throw Error("databook.id u");
         }
         if (dataUser.balance == undefined) {
-            throw console.error("balance undefined");
+            throw Error("balance undefined");
         }
         if (dataUser.balance < totalPrice) {
             return {data : 'saldo tidak cukup'}

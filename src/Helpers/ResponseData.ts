@@ -2,10 +2,11 @@
 class ResponseData {
     resp = (code: number, message: string | null, data: unknown) => {
         if (data != Object && data instanceof Error) {
+            const err = data as Error
             const response = {
                 code: code,
                 message: message,
-                data: data
+                data: err.message
             }
             return response;
         }

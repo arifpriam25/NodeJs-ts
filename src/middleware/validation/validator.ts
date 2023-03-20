@@ -22,7 +22,7 @@ class Validation {
 
         if(check !== true){
             // req.statusCode
-            return res.status(400),res.send(ResponseData.resp(400, "Bad Request", check))
+            return res.send(ResponseData.resp(400, "Bad Request", check))
         }
 
         next()
@@ -41,7 +41,7 @@ class Validation {
         
         const check = v.validate(data,validate)
         if(check !== true){
-            return res.status(400).send(ResponseData.resp(400, "Bad Request", check))
+            return res.send(ResponseData.resp(400, "Bad Request", check))
         }
         next();
     }

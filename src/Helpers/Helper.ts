@@ -55,11 +55,5 @@ class Helper {
         return null;
     }
 
-    cekData=(data:unknown)=>{
-        if(!data){
-            return {}
-        }
-        return data
-    }
 }
 export default new Helper()

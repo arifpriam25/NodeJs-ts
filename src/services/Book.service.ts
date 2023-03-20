@@ -19,7 +19,7 @@ class ServiceBook {
     getById = async (id: number):Promise<BooksAttributes> => {
         const result = await repositoryBook.findById(id)
         if(!result){
-            throw Error('')
+            throw Error('Book not found')
         }
         return result
 
@@ -27,7 +27,7 @@ class ServiceBook {
     update = async (id: number, data:object):Promise<object> => {
         const check = await repositoryBook.findById(id)
         if (!check) {
-            throw Error('')
+            throw Error('Book not Found')
         }
         // return data
         await repositoryBook.update(id, data)
@@ -37,7 +37,7 @@ class ServiceBook {
     delete = async (id: number):Promise<BooksAttributes> => {
         const result = await repositoryBook.findById(id)
         if (!result) {
-            throw Error('')
+            throw Error('Book not Found')
         }
         await repositoryBook.delete(id)
         return result

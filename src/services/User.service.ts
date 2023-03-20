@@ -31,7 +31,7 @@ class ServiceUser {
     login = async (email: string, password: string): Promise<Token> => {
         const data = await RepositoryUser.findByEmail(email)
         if (!data) {
-            throw Error('data not found')
+            throw Error('User Not Found')
         }
         await PasswordHelper.passwordCompare(password, data.password as string);
 
@@ -89,12 +89,12 @@ class ServiceUser {
 
     refreshToken = async (refToken: string): Promise<unknown> => {
         if (!refToken) {
-            return 'Error'
+            throw Error('Error reftoken')
         }
         const decodedUser = Helper.ExtractRefreshToken(refToken);
 
         if (!decodedUser) {
-            return 'Error'
+            throw Error('error.decoded')
         }
         const token = Helper.GenerateToken({
             name: decodedUser.name,
@@ -118,11 +118,11 @@ class ServiceUser {
 
     logout = async (refToken: string, email: string): Promise<unknown> => {
         if (!refToken) {
-            return 'Error'
+            throw Error('undefined Reftoken')
         }
         const result = await RepositoryUser.findByEmail(email);
         if (!result) {
-            return "undefined data"
+            throw Error('User Not Found')
         }
         // res.clearCookie("refreshToken");
         await RepositoryUser.updateByEmail(email, {
