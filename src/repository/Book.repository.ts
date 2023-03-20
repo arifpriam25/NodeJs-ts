@@ -11,7 +11,7 @@ class RepositoryBook {
         return find
     }
     
-    getAll = async () => {
+    getAll = async ():Promise<BooksAttributes[]> => {
         const data = await mBook.findAll({
             where: {
                 active: true
@@ -20,12 +20,13 @@ class RepositoryBook {
         // console.log(data)
         return data
     }
-    insert = async (data: BooksInput) => {
+    insert = async (data: BooksInput):Promise<BooksAttributes>=> {
         const insert = await mBook.create(data);
 
         return insert
     }
     update = async (id: number, data: object) => {
+        console.log(data)
         const update = await mBook.update(data, {
             where: {
                 id: id
@@ -33,7 +34,7 @@ class RepositoryBook {
         })
         return update
     }
-    delete = async (id: number) => {
+    delete = async (id: number):Promise<number> => {
         const del = await mBook.destroy({
             where: {
                 id: id

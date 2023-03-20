@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import sBook from "../services/Book.service";
-import { InputBook } from "../helpers/DTO/dto";
+import { InputBook_Payload } from "../helpers/DTO/dto";
 import ResponseData from "../helpers/ResponseData";
 
 
@@ -8,12 +8,12 @@ class ControllerRole {
     Insert = async (req: Request, res: Response): Promise<Response> => {
         try {
             // const service: sBook = new sBook(req);
-            const { title, author, publisher, year, price, quantity, active } = req.body
-            const bookData: InputBook = <InputBook>{
+            const { title, author, publisher, price, quantity, active } = req.body
+            const bookData: InputBook_Payload = <InputBook_Payload>{
                 title,
                 author,
                 publisher,
-                year,
+                year: new Date(),
                 price,
                 quantity,
                 active,
@@ -44,7 +44,7 @@ class ControllerRole {
             // const service: sBook = new sBook(req);
             const id = parseInt(req.params.id)
 
-            const result = await sBook.delete(id);
+            const result = await sBook.getById(id);
             return res.send(ResponseData.resp(200, "get by id", result))
         } catch (error) {
             return res.send(ResponseData.resp(400, "Error", error))
@@ -52,10 +52,20 @@ class ControllerRole {
     }
     update = async (req: Request, res: Response): Promise<Response> => {
         try {
+            const {title,author,publisher,price,quantity,active} = req.body
             // const service: sBook = new sBook(req);
             const id = parseInt(req.params.id)
+            const data = {
+                title,
+                author,
+                publisher,
+                year: new Date(),
+                price,
+                quantity,
+                active
+            }
 
-            const result = await sBook.delete(id);
+            const result = await sBook.update(id,data);
             return res.send(ResponseData.resp(200, "update", result))
         } catch (error) {
             return res.send(ResponseData.resp(400, "Error", error))

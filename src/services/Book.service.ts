@@ -1,13 +1,14 @@
 import repositoryBook from "../repository/Book.repository"
-import { InputBook } from "../helpers/DTO/dto"
+import { InputBook_Payload } from "../helpers/DTO/dto"
+import { BooksAttributes } from "../db/models/Books"
 
 class ServiceBook {
-    insert = async (bookData: InputBook) => {
+    insert = async (bookData: InputBook_Payload) => {
         const result = await repositoryBook.insert(bookData)
         return result
 
     }
-    getAll = async () => {
+    getAll = async ():Promise<BooksAttributes[]> => {
         const result = await repositoryBook.getAll()
         if (!result) {
             return result
@@ -15,34 +16,28 @@ class ServiceBook {
         return result
 
     }
-    getById = async (id: number) => {
+    getById = async (id: number):Promise<BooksAttributes> => {
         const result = await repositoryBook.findById(id)
+        if(!result){
+            throw Error('')
+        }
         return result
 
     }
-    update = async (id: number, title: string, author: string, publisher: string, year: number, price: number, quantity: number, active: boolean) => {
-        const result = {
-            title,
-            author,
-            publisher,
-            year,
-            price,
-            quantity,
-            active
-        }
+    update = async (id: number, data:object):Promise<object> => {
         const check = await repositoryBook.findById(id)
         if (!check) {
-           return check
+            throw Error('')
         }
         // return data
-        await repositoryBook.update(id, result)
-        return result
+        await repositoryBook.update(id, data)
+        return data
 
     }
-    delete = async (id: number) => {
+    delete = async (id: number):Promise<BooksAttributes> => {
         const result = await repositoryBook.findById(id)
         if (!result) {
-            return result
+            throw Error('')
         }
         await repositoryBook.delete(id)
         return result

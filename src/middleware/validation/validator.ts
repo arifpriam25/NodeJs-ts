@@ -33,14 +33,11 @@ class Validation {
             title: {type:"string"},
             author: {type:"string"},
             publisher: {type:"string"},
-            year: {type:"number", max:3000},
             price: {type:"number"},
             quantity: {type:"number"},
             active: {type:"boolean"},
-            $$strict: true
         };
         const data:InsertBook= <InsertBook>req.body
-        console.log(req.body)
         
         const check = v.validate(data,validate)
         if(check !== true){

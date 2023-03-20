@@ -16,7 +16,6 @@ export interface InsertBook {
     title: string;
     author: string;
     publisher: string;
-    year: number;
     price: number;
     quantity: number;
     active: boolean;
@@ -63,7 +62,7 @@ export interface OrdersData {
     date: Date;
 }
 
-export interface InputBook {
+export interface InputBook_Payload {
     title: string;
     author: string;
     publisher: string;

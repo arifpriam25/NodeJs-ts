@@ -8,7 +8,8 @@
     "dev": "nodemon src/index.ts",
     "build": "rimraf ./build  && tsc",
     "start": "npm run build && node build/index.js",
-    "lint": "npx eslint . --ext .ts --fix"
+    "lint": "npx eslint . --ext .ts --fix",
+    "db:setup": "npx eslint . --ext .ts --fix"
   },
   "keywords": [],
   "author": "",

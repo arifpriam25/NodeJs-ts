@@ -10,7 +10,7 @@ class RepositoryOrder {
         return result
     }
 
-    getAll = async (): Promise<Array<OrdersJoin>> => {
+    getAll = async (): Promise<OrdersJoin[]> => {
             const result = await Orders.findAll({
                 include: [
                     {
@@ -23,11 +23,10 @@ class RepositoryOrder {
             });
             // console.log(result)
             return result
-       
     }
     
     //Transaction
-    Orders = async (dataOrder: OrdersInput, balance: number, idUser: number, totalBook: number, idBook: number) => {
+    Orders = async (dataOrder: OrdersInput, balance: number, idUser: number, totalBook: number, idBook: number):Promise<string> => {
         const t = await sequelizeConnection.transaction()
         try {
             await User.update(
@@ -42,14 +41,13 @@ class RepositoryOrder {
             await Orders.create(dataOrder,
                 { transaction: t }
             );
-            // throw new Error('Something went wrong!');
             await t.commit();
             return "Order Success"
 
         } catch (error) {
             console.error(error);
             await t.rollback();
-            return error
+            return error as string
         }
     }
 }

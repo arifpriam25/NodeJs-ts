@@ -6,14 +6,14 @@ import { ShowUser, DataToken, Token, RegisterUser } from "../helpers/DTO/dto";
 import { UserInput } from "../db/models/User";
 
 class ServiceUser {
-    userDetail = async (email: string): Promise<ShowUser|unknown> => {
+    userDetail = async (email: string): Promise<ShowUser> => {
 
         const data = await RepositoryUser.findByEmail(email);
         if (!data) {
-            return data
+            throw Error('data not found')
         }
         if (!data.Role) {
-            return ''
+            throw Error('data.role not found')
         }
 
         const result = <ShowUser>{
@@ -28,10 +28,10 @@ class ServiceUser {
         return result
     }
 
-    login = async (email: string, password: string): Promise<Token|unknown> => {
+    login = async (email: string, password: string): Promise<Token> => {
         const data = await RepositoryUser.findByEmail(email)
         if (!data) {
-            return 'user not found'
+            throw Error('data not found')
         }
         await PasswordHelper.passwordCompare(password, data.password as string);
 
@@ -63,7 +63,7 @@ class ServiceUser {
         return resToken
     }
 
-    register = async (data: RegisterUser): Promise<UserInput|unknown> => {
+    register = async (data: RegisterUser): Promise<UserInput> => {
         const hashed = await PasswordHelper.passwordHashing(data.password as string);
         const { name, email, roleId } = data
         const InsertData = ({
@@ -80,7 +80,7 @@ class ServiceUser {
         const checkEmail = await RepositoryUser.findByEmail(InsertData.email as string)
 
         if (checkEmail) {
-            return ''
+            throw Error('data not found')
         }
         // return (dataUpdate)
         const input = await RepositoryUser.create(InsertData)
@@ -122,7 +122,7 @@ class ServiceUser {
         }
         const result = await RepositoryUser.findByEmail(email);
         if (!result) {
-            return "tidak ditemukan"
+            return "undefined data"
         }
         // res.clearCookie("refreshToken");
         await RepositoryUser.updateByEmail(email, {

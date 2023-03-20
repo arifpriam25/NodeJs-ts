@@ -7,7 +7,6 @@ class ClassAuthorization {
             const authToken = req.headers["authorization"] as string;
             const token = authToken && authToken.split("Bearer ")[1];
             // console.log(authToken)
-    
             if (token === null || typeof token !== 'string') {
                 return res.status(401).send(ResponseData.resp(400, "Unauthorized: Auth.1", null))
             }

@@ -6,7 +6,7 @@ class RepositoryRole {
         return data
     }
 
-    getAll = async () => {
+    getAll = async ():Promise<RoleAttributes[]> => {
         const data = await mRole.findAll({
             where: {
                 active: true
@@ -36,7 +36,7 @@ class RepositoryRole {
         return data
     }
     
-    delete = async (id: number) => {
+    delete = async (id: number):Promise<RoleAttributes|null> => {
         const data = await mRole.findByPk(id);
         if (!data) {
             return data

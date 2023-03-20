@@ -6,31 +6,31 @@ import { OrdersJoin } from "../db/models/Orders";
 import { UserData, OrdersData } from "../helpers/DTO/dto";
 
 class ServiceOrders {
-    buy = async (email: string, idBook: number, quantityBuy: number): Promise<object | unknown> => {
+    buy = async (email: string, idBook: number, quantityBuy: number): Promise<object> => {
         const dataBook = await RepositoryBook.findById(idBook)
 
         if (!dataBook) {
-            return "Book Not Found"
+            throw console.error("data notfound");
         }
 
         if (dataBook.price == undefined) {
-            return "null"
+            throw console.error("databook.price u");
         }
         const totalPrice = dataBook.price * quantityBuy;
         const totalBook = dataBook.quantity as number - quantityBuy;
 
         const dataUser: UserData = await <UserData>RepositoryUser.findByEmail(email)
         if (dataUser.id == undefined) {
-            return "null"
+            throw console.error("datauser.id u");
         }
         if (dataBook.id == undefined) {
-            return "null"
+            throw console.error("databook.id u");
         }
         if (dataUser.balance == undefined) {
-            return "null"
+            throw console.error("balance undefined");
         }
         if (dataUser.balance < totalPrice) {
-            return "saldo tidak cukup";
+            return {data : 'saldo tidak cukup'}
         }
         const userBalance = dataUser.balance - totalPrice;
         console.log("saldo sekarang : " + dataUser.balance)
