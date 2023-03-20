@@ -33,7 +33,10 @@ class ServiceUser {
         if (!data) {
             throw Error('User Not Found')
         }
-        await PasswordHelper.passwordCompare(password, data.password as string);
+        const compare = await PasswordHelper.passwordCompare(password, data.password);
+        if(!compare){
+            throw new Error ('Password not match')
+        }
 
         const dataUser = <DataToken>{
             id: data.id,

@@ -30,7 +30,7 @@ class ServiceOrders {
             throw Error("balance undefined");
         }
         if (dataUser.balance < totalPrice) {
-            return {data : 'saldo tidak cukup'}
+            return { data: 'saldo tidak cukup' }
         }
         const userBalance = dataUser.balance - totalPrice;
         console.log("saldo sekarang : " + dataUser.balance)

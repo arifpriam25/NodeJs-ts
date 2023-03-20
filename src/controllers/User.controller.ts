@@ -29,8 +29,6 @@ class ControlerUser {
     UserLogin = async (req: Request, res: Response): Promise<Response> => {
         try {
             const { email, password } = req.body;
-            // const service: sUser = new sUser(req);
-            // console.log(email)
             const result: UserData = await <UserData>sUser.login(email, password);
             const reftoken = result.refreshToken
             res.cookie('refreshToken', reftoken, {
