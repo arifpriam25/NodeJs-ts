@@ -1,6 +1,6 @@
 
 class ResponseData {
-    resp = (code: number, message: string | null, data: object | unknown) => {
+    resp = (code: number, message: string | null, data: unknown) => {
         if (data != Object && data instanceof Error) {
             const response = {
                 code: code,

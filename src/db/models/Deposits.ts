@@ -15,7 +15,6 @@ export interface DepositJoin extends DepositAttributes{
 }
 
 export type DepositInput = Optional<DepositAttributes, 'id'>
-export type DepositOutput = Required<DepositAttributes>
 // export type OrderJoinsReq = Required<OrderJoin>
 
 export type OrderJoinsReqJoin = Required<DepositJoin>

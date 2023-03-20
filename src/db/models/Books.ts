@@ -8,7 +8,7 @@ export interface BooksAttributes {
   title: string;
   author: string;
   publisher: string;
-  year: number;
+  year: Date;
   price: number;
   quantity: number;
   active: boolean;
@@ -16,14 +16,13 @@ export interface BooksAttributes {
 }
 
 export type BooksInput = Optional<BooksAttributes, 'id'>
-export type BooksOutput = Required<BooksAttributes>
 
 class Books extends Model<BooksAttributes, BooksInput> implements BooksAttributes {
   id!: number;
   title!: string;
   author!: string;
   publisher!: string;
-  year!: number;
+  year!: Date;
   price!: number;
   quantity!: number;
   active!: boolean;
@@ -50,7 +49,7 @@ Books.init({
   },
   year: {
     allowNull: false,
-    type: DataTypes.INTEGER
+    type: DataTypes.DATE
   },
   price: {
     allowNull: false,

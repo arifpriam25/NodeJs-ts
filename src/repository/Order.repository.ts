@@ -24,32 +24,23 @@ class RepositoryOrder {
         // console.log(data)
         return result
     }
-    Orders = async () => {
+    Orders = async (dataOrder:OrdersInput,balance:number,idUser:number,totalBook:number,idBook:number) => {
         const t = await sequelizeConnection.transaction()
-            const a = new Date().getTime()
         try {
             await User.update(
-                { balance: 200000 },
-                { where: { id: 1 }, transaction:t }
+                { balance: balance },
+                { where: { id:idUser }, transaction:t }
             );
             
             await Books.update(
-                { quantity: 2 },
-                { where: { id: 1 }, transaction:t }
+                { quantity: totalBook },
+                { where: { id: idBook }, transaction:t }
             );
-            await Orders.create(
-                {
-                    idUser:1,
-                    idBook:1,
-                    quantity:2,
-                    totalPrice:150000,
-                    buyDate: a
-                },
+            await Orders.create(dataOrder,
                 { transaction:t }
             );
             // throw new Error('Something went wrong!');
             await t.commit();
-            console.log(a);
             return "Order Success"
             
         } catch (error) {

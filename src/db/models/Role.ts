@@ -12,7 +12,6 @@ export interface RoleAttributes {
 
 
 export type RoleInput = Optional<RoleAttributes, 'id'>
-export type RoleOutput = Required<RoleAttributes>
 
 class Role extends Model<RoleAttributes, RoleInput> implements RoleAttributes {
   public id!: number;

@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       year: {
-        type: Sequelize.INTEGER
+        type: Sequelize.DATE
       },
       price: {
         type: Sequelize.FLOAT

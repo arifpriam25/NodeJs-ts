@@ -20,7 +20,6 @@ export interface HistoryBJoin extends HistoryBalanceAttributes{
 }
 
 export type HistoryBalanceInput = Optional<HistoryBalanceAttributes, 'id'>
-export type HistoryBalanceOutput = Required<HistoryBalanceAttributes>
 // export type OrderJoinsReq = Required<OrderJoin>
 
 class HistoryBalance extends Model<HistoryBalanceAttributes, HistoryBalanceInput> implements HistoryBalanceAttributes {

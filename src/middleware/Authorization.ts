@@ -4,7 +4,7 @@ class ClassAuthorization {
     authenticated = (req: Request, res: Response, next: NextFunction) => {
         try {
             const authToken = req.headers["authorization"] as string;
-            const token = authToken && authToken.split(" ")[1];
+            const token = authToken && authToken.split("Bearer ")[1];
             // console.log(authToken)
     
             if (token === null || typeof token !== 'string') {

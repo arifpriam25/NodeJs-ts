@@ -79,7 +79,7 @@ export interface InputBook {
     title: string;
     author: string;
     publisher: string;
-    year: number;
+    year: Date;
     price: number;
     quantity: number;
     active: boolean;

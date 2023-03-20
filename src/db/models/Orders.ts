@@ -10,8 +10,8 @@ export interface OrdersAttributes {
   idUser: number;
   idBook: number;
   quantity: number;
-  totalPrice: number;
-  buyDate: number;
+  price: number;
+  buyDate: Date;
 }
 export interface OrdersJoin extends OrdersAttributes{
   User?:UserAttributes;
@@ -19,8 +19,6 @@ export interface OrdersJoin extends OrdersAttributes{
 }
 
 export type OrdersInput = Optional<OrdersAttributes, 'id'>
-export type OrdersOutput = Required<OrdersAttributes>
-// export type OrderJoinsReq = Required<OrderJoin>
 
 export type OrderJoinsReqJoin = Required<OrdersJoin>
 
@@ -29,8 +27,8 @@ class Orders extends Model<OrdersAttributes, OrdersInput> implements OrdersAttri
   idUser!: number;
   idBook!: number;
   quantity!: number;
-  totalPrice!: number;
-  buyDate!: number;
+  price!: number;
+  buyDate!: Date;
 }
 
 Orders.init({
@@ -60,13 +58,13 @@ Orders.init({
     allowNull: false,
     type: DataTypes.INTEGER
   },
-  totalPrice: {
+  price: {
     allowNull: false,
     type: DataTypes.FLOAT
   },
   buyDate: {
     allowNull: false,
-    type: DataTypes.FLOAT  
+    type: DataTypes.DATE 
   },
 }, {
   timestamps: true,

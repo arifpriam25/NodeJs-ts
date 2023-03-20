@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import sOrder from "../services/Order.service"
+import ServiceOrder from "../services/Order.service"
 import ResponseData from "../helpers/ResponseData";
 
 class ControllerOrder {
@@ -7,13 +7,13 @@ class ControllerOrder {
         const emailUser = res.locals.userEmail;
         const {idBook, quantityBuy} = req.body
 
-        const Book = await sOrder.buy(emailUser,idBook,quantityBuy)
+        const result = await ServiceOrder.buy(emailUser,idBook,quantityBuy)
 
-        return res.send({message: "buy", data: Book})
+        return res.send({message: "buy", data: result})
     }
     historyOrder = async (req: Request, res: Response): Promise<Response> => {
         try {
-            const result = await sOrder.ordrData()
+            const result = await ServiceOrder.ordrData()
 
             return res.send(ResponseData.resp(200,"List Order",result))
         } catch (error) {

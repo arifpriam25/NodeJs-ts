@@ -62,9 +62,9 @@ class ControlerUser {
             // const service: sUser = new sUser(req);
             const result = await sUser.logout(refreshToken, email);
             res.clearCookie('refreshToken')
-            return res.send(ResponseData.resp(200, "Token Login", result))
+            return res.send(ResponseData.resp(200, "Success Logout", [result]))
         } catch (error) {
-            return res.send(ResponseData.resp(500, "Error", error));
+            return res.send(error);
         }
 
     }

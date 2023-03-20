@@ -21,7 +21,6 @@ export interface UserJoinAttribute extends UserAttributes {
 }
 
 export type UserInput = Optional<UserAttributes, 'id'>
-export type UserOutput = Required<UserAttributes>
 
 class User extends Model<UserAttributes, UserInput> implements UserAttributes {
     public id!: number;

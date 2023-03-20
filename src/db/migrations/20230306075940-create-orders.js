@@ -35,7 +35,7 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       buyDate: {
-        type: Sequelize.FLOAT
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
