@@ -85,7 +85,7 @@ class ServiceUser {
         if (checkEmail) {
             throw Error('data not found')
         }
-        // return (dataUpdate)
+
         const input = await RepositoryUser.create(InsertData)
         return input
     }
@@ -127,7 +127,7 @@ class ServiceUser {
         if (!result) {
             throw Error('User Not Found')
         }
-        // res.clearCookie("refreshToken");
+
         await RepositoryUser.updateByEmail(email, {
             accessToken: null,
             name: result.name,

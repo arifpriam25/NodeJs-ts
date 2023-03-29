@@ -40,7 +40,6 @@ Deposit.init({
       model: 'Users',
       key: 'id'
     },
-
   },
   amount: {
     allowNull: false,
