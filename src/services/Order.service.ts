@@ -2,29 +2,25 @@ import RepositoryUser from "../repository/User.repository";
 import RepositoryBook from "../repository/Book.repository";
 import RepositoryOrder from "../repository/Order.repository";
 import { OrdersJoin } from "../db/models/Orders";
-// import Helper from "../helpers/Helper";
 import { UserData, OrdersData } from "../helpers/DTO/dto";
 
 class ServiceOrders {
     buy = async (email: string, idBook: number, quantityBuy: number): Promise<object> => {
         const dataBook = await RepositoryBook.findById(idBook)
-
         if (!dataBook) {
-            throw Error("data notfound");
+            throw Error("data not found")
         }
-
-        if (dataBook.price == undefined) {
-            throw Error("databook.price u");
-        }
+        // if (dataBook.price == undefined) {
+        //     throw Error("databook.price u")
+        // }
         const totalPrice = dataBook.price * quantityBuy;
         const totalBook = dataBook.quantity as number - quantityBuy;
-
         const dataUser: UserData = await <UserData>RepositoryUser.findByEmail(email)
         if (dataUser.id == undefined) {
-            throw Error("datauser.id u");
+            throw Error("datauser.id u")
         }
         if (dataBook.id == undefined) {
-            throw Error("databook.id u");
+            throw Error("databook.id u")
         }
         if (dataUser.balance == undefined) {
             throw Error("balance undefined");
@@ -36,7 +32,6 @@ class ServiceOrders {
         console.log("saldo sekarang : " + dataUser.balance)
         console.log("total harga : " + totalPrice)
         console.log("total saldo : " + userBalance)
-
 
         //update user
         const idUser = dataUser.id;
