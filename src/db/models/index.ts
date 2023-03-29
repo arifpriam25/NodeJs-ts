@@ -22,6 +22,6 @@ const testDb = async (): Promise<void> => {
     console.log(`Unable to Connect to Database: ${error}`);
   }
 };
-
+ 
 testDb();
 export default sequelizeConnection;
