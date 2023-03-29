@@ -23,8 +23,7 @@ class ClassAuthorization {
         } catch (error) {
             return res.send(ResponseData.resp(500, "error", error));
         }
-    }
-     
+    } 
     adminRole = (req: Request, res: Response, next: NextFunction) => {
         try {
             const roleId = res.locals.roleId
